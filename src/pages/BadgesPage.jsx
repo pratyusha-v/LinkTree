@@ -9,7 +9,7 @@ export default function BadgesPage() {
   const user = { id: '00000000-0000-0000-0000-000000000001' };
 
   // Fetch user badges
-  const { data: userBadges, isLoading: badgesLoading } = useQuery({
+  const { data: userBadges, isLoading: badgesLoading, error: badgesError } = useQuery({
     queryKey: ['userBadges', user.id],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -19,7 +19,7 @@ export default function BadgesPage() {
           badge:badge_definitions(*)
         `)
         .eq('user_id', user.id)
-        .order('awarded_at', { ascending: false });
+        .order('earned_at', { ascending: false });
       
       if (error) throw error;
       return data;
@@ -27,7 +27,7 @@ export default function BadgesPage() {
   });
 
   // Fetch all badge definitions
-  const { data: allBadges, isLoading: definitionsLoading } = useQuery({
+  const { data: allBadges, isLoading: definitionsLoading, error: definitionsError } = useQuery({
     queryKey: ['badgeDefinitions'],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -42,7 +42,7 @@ export default function BadgesPage() {
   });
 
   // Fetch streak stats
-  const { data: streakStats } = useQuery({
+  const { data: streakStats, error: streakError } = useQuery({
     queryKey: ['streakStats', user.id],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -57,7 +57,7 @@ export default function BadgesPage() {
   });
 
   // Fetch milestone stats
-  const { data: milestoneStats } = useQuery({
+  const { data: milestoneStats, error: milestoneError } = useQuery({
     queryKey: ['milestoneStats', user.id],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -72,7 +72,7 @@ export default function BadgesPage() {
   });
 
   // Fetch scholar stats
-  const { data: scholarStats } = useQuery({
+  const { data: scholarStats, error: scholarError } = useQuery({
     queryKey: ['scholarStats', user.id],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -87,6 +87,30 @@ export default function BadgesPage() {
   });
 
   const isLoading = badgesLoading || definitionsLoading;
+  const hasError = badgesError || definitionsError || streakError || milestoneError || scholarError;
+
+  // Error state
+  if (hasError) {
+    return (
+      <div className="badges-page">
+        <div className="error-state">
+          <div className="error-icon">🥀</div>
+          <h2 className="error-title">Uh oh, this is awkward!</h2>
+          <p className="error-message">
+            We couldn't load your badges and stats. 
+            <br />
+            Please check your database connection.
+          </p>
+          <button 
+            className="error-retry-button"
+            onClick={() => window.location.reload()}
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="badges-page">
