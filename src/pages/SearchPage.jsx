@@ -1,11 +1,11 @@
 import React from 'react';
+import GlobalSearch from '../components/search/GlobalSearch';
+import '../styles/SearchPage.css';
 
 const SearchPage = () => {
   return (
-    <div style={{ padding: '2rem' }}>
-      <h1>Search</h1>
-      <p>This page will provide global search across all items and notes.</p>
-      <p>Implementation coming next...</p>
+    <div className="search-page">
+      <GlobalSearch />
     </div>
   );
 };
