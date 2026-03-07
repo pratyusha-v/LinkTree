@@ -6,6 +6,9 @@ import { getItemsByFolder } from '../services/itemService';
 import { supabase } from '../services/supabase';
 import ItemList from '../components/items/ItemList';
 import AddItemModal from '../components/items/AddItemModal';
+import EditItemModal from '../components/items/EditItemModal';
+import DeleteConfirmDialog from '../components/items/DeleteConfirmDialog';
+import ItemDetailModal from '../components/items/ItemDetailModal';
 import { FiPlus } from 'react-icons/fi';
 import '../styles/FolderDetailPage.css';
 
@@ -13,6 +16,9 @@ export default function FolderDetailPage() {
   const { folderId } = useParams();
   const user = { id: '00000000-0000-0000-0000-000000000001' };
   const [showAddModal, setShowAddModal] = useState(false);
+  const [editingItem, setEditingItem] = useState(null);
+  const [deletingItem, setDeletingItem] = useState(null);
+  const [viewingItem, setViewingItem] = useState(null);
 
   // Get folder details
   const { data: folders } = useQuery({
@@ -81,11 +87,9 @@ export default function FolderDetailPage() {
         items={items || []}
         notes={notes || []}
         isLoading={itemsLoading}
-        onItemClick={(item) => {
-          if (item.url) {
-            window.open(item.url, '_blank', 'noopener,noreferrer');
-          }
-        }}
+        onItemClick={(item) => setViewingItem(item)}
+        onEdit={(item) => setEditingItem(item)}
+        onDelete={(item) => setDeletingItem(item)}
       />
 
       {showAddModal && (
@@ -93,6 +97,31 @@ export default function FolderDetailPage() {
           folderId={folderId}
           userId={user.id}
           onClose={() => setShowAddModal(false)}
+        />
+      )}
+
+      {editingItem && (
+        <EditItemModal
+          item={editingItem}
+          isOpen={!!editingItem}
+          onClose={() => setEditingItem(null)}
+        />
+      )}
+
+      {deletingItem && (
+        <DeleteConfirmDialog
+          item={deletingItem}
+          isOpen={!!deletingItem}
+          onClose={() => setDeletingItem(null)}
+        />
+      )}
+
+      {viewingItem && (
+        <ItemDetailModal
+          item={viewingItem}
+          notes={notes}
+          isOpen={!!viewingItem}
+          onClose={() => setViewingItem(null)}
         />
       )}
     </div>

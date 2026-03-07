@@ -1,7 +1,7 @@
 import ItemCard from './ItemCard';
 import '../../styles/ItemList.css';
 
-export default function ItemList({ items, notes, isLoading, onItemClick }) {
+export default function ItemList({ items, notes, isLoading, onItemClick, onEdit, onDelete }) {
   if (isLoading) {
     return (
       <div className="items-loading">
@@ -28,6 +28,8 @@ export default function ItemList({ items, notes, isLoading, onItemClick }) {
           item={item}
           notes={notes}
           onClick={onItemClick}
+          onEdit={onEdit}
+          onDelete={onDelete}
         />
       ))}
     </div>

@@ -1,4 +1,4 @@
-import { FiExternalLink, FiBookOpen, FiVideo, FiHeadphones, FiUser, FiFile } from 'react-icons/fi';
+import { FiExternalLink, FiBookOpen, FiVideo, FiHeadphones, FiUser, FiFile, FiEdit2, FiTrash2 } from 'react-icons/fi';
 import '../../styles/ItemCard.css';
 
 const getItemIcon = (type) => {
@@ -31,8 +31,18 @@ const formatDate = (dateString) => {
   }).format(date);
 };
 
-export default function ItemCard({ item, notes, onClick }) {
+export default function ItemCard({ item, notes, onClick, onEdit, onDelete }) {
   const itemNotes = notes?.filter(note => note.item_id === item.id) || [];
+
+  const handleEdit = (e) => {
+    e.stopPropagation();
+    onEdit?.(item);
+  };
+
+  const handleDelete = (e) => {
+    e.stopPropagation();
+    onDelete?.(item);
+  };
 
   return (
     <div className="item-card" onClick={() => onClick?.(item)}>
@@ -41,17 +51,34 @@ export default function ItemCard({ item, notes, onClick }) {
           {getItemIcon(item.item_type)}
           <span>{getItemTypeLabel(item.item_type)}</span>
         </div>
-        {item.url && (
-          <a
-            href={item.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="item-external-link"
-            onClick={(e) => e.stopPropagation()}
+        <div className="item-actions">
+          {item.url && (
+            <a
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="item-action-btn item-external-link"
+              onClick={(e) => e.stopPropagation()}
+              title="Open link"
+            >
+              <FiExternalLink size={16} />
+            </a>
+          )}
+          <button
+            className="item-action-btn item-edit-btn"
+            onClick={handleEdit}
+            title="Edit item"
           >
-            <FiExternalLink size={16} />
-          </a>
-        )}
+            <FiEdit2 size={16} />
+          </button>
+          <button
+            className="item-action-btn item-delete-btn"
+            onClick={handleDelete}
+            title="Delete item"
+          >
+            <FiTrash2 size={16} />
+          </button>
+        </div>
       </div>
 
       <h3 className="item-title">{item.title}</h3>
