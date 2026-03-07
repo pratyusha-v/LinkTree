@@ -89,8 +89,20 @@ export default function BadgesPage() {
   const isLoading = badgesLoading || definitionsLoading;
   const hasError = badgesError || definitionsError || streakError || milestoneError || scholarError;
 
+  // Debug logging
+  console.log('BadgesPage render:', {
+    isLoading,
+    hasError,
+    userBadgesCount: userBadges?.length,
+    allBadgesCount: allBadges?.length,
+    hasStreakStats: !!streakStats,
+    hasMilestoneStats: !!milestoneStats,
+    hasScholarStats: !!scholarStats
+  });
+
   // Error state
   if (hasError) {
+    console.error('Badge page errors:', { badgesError, definitionsError, streakError, milestoneError, scholarError });
     return (
       <div className="badges-page">
         <div className="error-state">
@@ -131,31 +143,43 @@ export default function BadgesPage() {
           {/* Progress Section */}
           <section className="progress-section">
             <h2>Your Progress</h2>
-            <BadgeProgress 
-              streakStats={streakStats}
-              milestoneStats={milestoneStats}
-              scholarStats={scholarStats}
-              allBadges={allBadges}
-              userBadges={userBadges}
-            />
+            {allBadges && userBadges ? (
+              <BadgeProgress 
+                streakStats={streakStats || {}}
+                milestoneStats={milestoneStats || {}}
+                scholarStats={scholarStats || {}}
+                allBadges={allBadges || []}
+                userBadges={userBadges || []}
+              />
+            ) : (
+              <p>Loading progress data...</p>
+            )}
           </section>
 
           {/* Scholar Stats */}
           <section className="scholar-section">
             <h2>Time-of-Day Activity</h2>
-            <ScholarBadgeDisplay 
-              scholarStats={scholarStats}
-              userBadges={userBadges}
-            />
+            {scholarStats && userBadges ? (
+              <ScholarBadgeDisplay 
+                scholarStats={scholarStats || {}}
+                userBadges={userBadges || []}
+              />
+            ) : (
+              <p>Loading scholar data...</p>
+            )}
           </section>
 
           {/* Badges Collection */}
           <section className="badges-section">
             <h2>All Badges</h2>
-            <BadgeCollection 
-              userBadges={userBadges}
-              allBadges={allBadges}
-            />
+            {allBadges && userBadges ? (
+              <BadgeCollection 
+                userBadges={userBadges || []}
+                allBadges={allBadges || []}
+              />
+            ) : (
+              <p>Loading badges...</p>
+            )}
           </section>
         </>
       )}
