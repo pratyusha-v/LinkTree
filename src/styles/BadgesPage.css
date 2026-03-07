@@ -1,0 +1,57 @@
+.badges-page {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.badges-header {
+  margin-bottom: 3rem;
+}
+
+.badges-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.badges-header p {
+  font-size: 1.125rem;
+  color: #6b7280;
+}
+
+.loading-state {
+  text-align: center;
+  padding: 3rem;
+  color: #6b7280;
+  font-size: 1.125rem;
+}
+
+.progress-section,
+.scholar-section,
+.badges-section {
+  margin-bottom: 3rem;
+}
+
+.progress-section h2,
+.scholar-section h2,
+.badges-section h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .badges-page {
+    padding: 1.5rem;
+  }
+
+  .badges-header h1 {
+    font-size: 2rem;
+  }
+
+  .badges-header p {
+    font-size: 1rem;
+  }
+}

@@ -62,9 +62,6 @@ export default function FolderDetailPage() {
         <div className="folder-header-content">
           <div className="folder-info">
             <h1 className="folder-title">{folder.name}</h1>
-            {folder.description && (
-              <p className="folder-description">{folder.description}</p>
-            )}
           </div>
         </div>
         <div className="folder-actions">

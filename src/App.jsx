@@ -5,7 +5,7 @@ import { Toaster } from 'react-hot-toast';
 import Layout from './components/layout/Layout';
 import DashboardPage from './pages/DashboardPage';
 import FolderDetailPage from './pages/FolderDetailPage';
-import ProfilePage from './pages/ProfilePage';
+import BadgesPage from './pages/BadgesPage';
 import SearchPage from './pages/SearchPage';
 
 const queryClient = new QueryClient({
@@ -30,7 +30,7 @@ function App() {
               element={<DashboardPage showCreateFolder={showCreateFolder} setShowCreateFolder={setShowCreateFolder} />} 
             />
             <Route path="/folder/:folderId" element={<FolderDetailPage />} />
-            <Route path="/badges" element={<ProfilePage />} />
+            <Route path="/badges" element={<BadgesPage />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
