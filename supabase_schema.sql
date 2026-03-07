@@ -379,4 +379,4 @@ INSERT INTO user_badges (user_id, badge_id, earned_at, progress_data, is_new) VA
 ('00000000-0000-0000-0000-000000000001', 'milestone_1', '2025-12-02 08:15:00+00', '{"count":1}', false),
 ('00000000-0000-0000-0000-000000000001', 'milestone_10', '2026-01-06 12:00:00+00', '{"count":10}', false),
 ('00000000-0000-0000-0000-000000000001', 'streak_daily_7', '2026-01-13 14:30:00+00', '{"streak":7}', false),
-('00000000-0000-0000-0000-000000000001', 'scholar_night', '2026-02-01 20:30:00+00', '{"night_saves":18,"total_saves":35,"percentage":51}', false);
+('00000000-0000-0000-0000-000000000001', 'night_scholar', '2026-02-01 20:30:00+00', '{"night_saves":18,"total_saves":35,"percentage":51}', false);
