@@ -1,30 +1,26 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { FiAward, FiSearch } from 'react-icons/fi';
+import React, { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import Sidebar from './Sidebar';
+import { getFolders } from '../../services/folderService';
 import './Layout.css';
 
-const Layout = ({ children }) => {
+const Layout = ({ children, onCreateFolder }) => {
+  const user = { id: '00000000-0000-0000-0000-000000000001' };
+
+  const { data: folders, isLoading } = useQuery({
+    queryKey: ['folders', user.id],
+    queryFn: () => getFolders(user.id)
+  });
 
   return (
-    <div className="layout">
-      <nav className="navbar">
-        <div className="navbar-container">
-          <Link to="/dashboard" className="navbar-brand">
-            📚 LinkTree
-          </Link>
-
-          <div className="navbar-actions">
-            <Link to="/search" className="nav-link" title="Search">
-              <FiSearch size={20} />
-            </Link>
-            <Link to="/profile" className="nav-link" title="Badges & Profile">
-              <FiAward size={20} />
-            </Link>
-          </div>
-        </div>
-      </nav>
-
-      <main className="main-content">
+    <div className="layout-notion">
+      <Sidebar 
+        folders={folders || []}
+        isLoading={isLoading}
+        onCreateFolder={onCreateFolder}
+      />
+      
+      <main className="main-content-notion">
         {children}
       </main>
     </div>

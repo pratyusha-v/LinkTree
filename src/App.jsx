@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
+import Layout from './components/layout/Layout';
 import DashboardPage from './pages/DashboardPage';
-import FolderPage from './pages/FolderPage';
+import FolderDetailPage from './pages/FolderDetailPage';
 import ProfilePage from './pages/ProfilePage';
 import SearchPage from './pages/SearchPage';
 
@@ -17,16 +18,23 @@ const queryClient = new QueryClient({
 });
 
 function App() {
+  const [showCreateFolder, setShowCreateFolder] = useState(false);
+
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
-        <Routes>
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/folder/:folderId" element={<FolderPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/search" element={<SearchPage />} />
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
-        </Routes>
+        <Layout onCreateFolder={() => setShowCreateFolder(true)}>
+          <Routes>
+            <Route 
+              path="/" 
+              element={<DashboardPage showCreateFolder={showCreateFolder} setShowCreateFolder={setShowCreateFolder} />} 
+            />
+            <Route path="/folder/:folderId" element={<FolderDetailPage />} />
+            <Route path="/badges" element={<ProfilePage />} />
+            <Route path="/search" element={<SearchPage />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Layout>
         <Toaster position="top-right" />
       </Router>
     </QueryClientProvider>

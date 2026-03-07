@@ -134,3 +134,10 @@ export const itemService = {
     }
   }
 };
+
+// Export standalone functions for easier imports
+export const getItems = (userId) => itemService.getItems(userId);
+export const getItemsByFolder = (folderId) => itemService.getItemsByFolder(folderId);
+export const createItem = (itemData) => itemService.createItem(itemData);
+export const updateItem = (itemId, updates) => itemService.updateItem(itemId, updates);
+export const deleteItem = (itemId) => itemService.deleteItem(itemId);

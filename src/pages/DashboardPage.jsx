@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { folderService } from '../services/folderService';
-import Layout from '../components/layout/Layout';
+import { getItems } from '../services/itemService';
+import { supabase } from '../services/supabase';
 import toast from 'react-hot-toast';
-import { FiPlus, FiFolder } from 'react-icons/fi';
-import './DashboardPage.css';
+import { FiPlus, FiFolder, FiLink, FiAward } from 'react-icons/fi';
+import '../styles/DashboardWelcome.css';
 
-const DashboardPage = () => {
-  const user = { id: '00000000-0000-0000-0000-000000000001' }; // Demo user UUID for testing without auth
+const DashboardPage = ({ showCreateFolder, setShowCreateFolder }) => {
+  const user = { id: '00000000-0000-0000-0000-000000000001' };
   const queryClient = useQueryClient();
-  const [showFolderForm, setShowFolderForm] = useState(false);
   const [folderData, setFolderData] = useState({
     name: '',
     description: '',
@@ -17,10 +17,26 @@ const DashboardPage = () => {
     icon: '📁'
   });
 
-  // Fetch folders
-  const { data: folders, isLoading } = useQuery({
+  // Fetch data
+  const { data: folders } = useQuery({
     queryKey: ['folders', user.id],
     queryFn: () => folderService.getFolders(user.id)
+  });
+
+  const { data: items } = useQuery({
+    queryKey: ['items', user.id],
+    queryFn: () => getItems(user.id)
+  });
+
+  const { data: badges } = useQuery({
+    queryKey: ['badges', user.id],
+    queryFn: async () => {
+      const { data } = await supabase
+        .from('user_badges')
+        .select('*')
+        .eq('user_id', user.id);
+      return data;
+    }
   });
 
   // Create folder mutation
@@ -29,7 +45,7 @@ const DashboardPage = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(['folders']);
       toast.success('Folder created!');
-      setShowFolderForm(false);
+      setShowCreateFolder(false);
       setFolderData({ name: '', description: '', color: '#3b82f6', icon: '📁' });
     },
     onError: (error) => {
@@ -47,48 +63,77 @@ const DashboardPage = () => {
     createFolder.mutate(folderData);
   };
 
-  if (isLoading) {
-    return (
-      <Layout>
-        <div className="flex items-center justify-center" style={{ minHeight: '50vh' }}>
-          <div className="spinner"></div>
-        </div>
-      </Layout>
-    );
-  }
+  const stats = [
+    { label: 'Folders', value: folders?.length || 0, icon: FiFolder, color: '#3b82f6' },
+    { label: 'Total Items', value: items?.length || 0, icon: FiLink, color: '#10b981' },
+    { label: 'Badges Earned', value: badges?.length || 0, icon: FiAward, color: '#f59e0b' }
+  ];
 
   return (
-    <Layout>
-      <div className="dashboard">
-        <div className="dashboard-header">
-          <div>
-            <h1>Your Library</h1>
-            <p className="text-secondary">Organize your knowledge into folders</p>
-          </div>
-          <button 
-            className="btn btn-primary"
-            onClick={() => setShowFolderForm(!showFolderForm)}
-          >
-            <FiPlus /> Create Folder
-          </button>
+    <div className="dashboard-welcome">
+      <div className="welcome-header">
+        <div className="welcome-content">
+          <h1 className="welcome-title">Welcome to LinkTree</h1>
+          <p className="welcome-subtitle">
+            Your personal knowledge management system. Organize links, articles, books, and more into folders.
+          </p>
         </div>
+      </div>
 
-        {showFolderForm && (
-          <div className="folder-form-card">
+      <div className="stats-grid">
+        {stats.map((stat) => (
+          <div key={stat.label} className="stat-card" style={{ '--stat-color': stat.color }}>
+            <div className="stat-icon">
+              <stat.icon size={24} />
+            </div>
+            <div className="stat-info">
+              <div className="stat-value">{stat.value}</div>
+              <div className="stat-label">{stat.label}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="getting-started">
+        <h2 className="section-title">Getting Started</h2>
+        <div className="steps-grid">
+          <div className="step-card">
+            <div className="step-number">1</div>
+            <h3>Select a Folder</h3>
+            <p>Click on a folder in the sidebar to view its content.</p>
+          </div>
+          <div className="step-card">
+            <div className="step-number">2</div>
+            <h3>Explore Your Items</h3>
+            <p>See all your saved links, articles, books, and videos organized by folder.</p>
+          </div>
+          <div className="step-card">
+            <div className="step-number">3</div>
+            <h3>Track Progress</h3>
+            <p>Build streaks, hit milestones, and earn scholar badges by saving regularly.</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Create Folder Modal */}
+      {showCreateFolder && (
+        <div className="modal-overlay" onClick={() => setShowCreateFolder(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h3>Create New Folder</h3>
             <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label>Name *</label>
+                <input
+                  type="text"
+                  value={folderData.name}
+                  onChange={(e) => setFolderData({ ...folderData, name: e.target.value })}
+                  placeholder="e.g., Web Development"
+                  required
+                  autoFocus
+                />
+              </div>
               <div className="form-row">
                 <div className="form-group">
-                  <label>Name *</label>
-                  <input
-                    type="text"
-                    value={folderData.name}
-                    onChange={(e) => setFolderData({ ...folderData, name: e.target.value })}
-                    placeholder="e.g., Web Development"
-                    required
-                  />
-                </div>
-                <div className="form-group form-group-small">
                   <label>Icon</label>
                   <input
                     type="text"
@@ -98,7 +143,7 @@ const DashboardPage = () => {
                     maxLength={2}
                   />
                 </div>
-                <div className="form-group form-group-small">
+                <div className="form-group">
                   <label>Color</label>
                   <input
                     type="color"
@@ -119,55 +164,20 @@ const DashboardPage = () => {
               <div className="form-actions">
                 <button 
                   type="button" 
-                  className="btn btn-secondary"
-                  onClick={() => setShowFolderForm(false)}
+                  className="btn-secondary"
+                  onClick={() => setShowCreateFolder(false)}
                 >
                   Cancel
                 </button>
-                <button type="submit" className="btn btn-primary" disabled={createFolder.isPending}>
+                <button type="submit" className="btn-primary" disabled={createFolder.isPending}>
                   {createFolder.isPending ? 'Creating...' : 'Create Folder'}
                 </button>
               </div>
             </form>
           </div>
-        )}
-
-        {folders?.length === 0 ? (
-          <div className="empty-state">
-            <FiFolder size={64} />
-            <h2>No folders yet</h2>
-            <p>Create your first folder to start organizing your knowledge</p>
-            <button 
-              className="btn btn-primary"
-              onClick={() => setShowFolderForm(true)}
-            >
-              <FiPlus /> Create Your First Folder
-            </button>
-          </div>
-        ) : (
-          <div className="folders-grid">
-            {folders?.map((folder) => (
-              <a 
-                key={folder.id} 
-                href={`/folder/${folder.id}`}
-                className="folder-card"
-                style={{ borderLeftColor: folder.color }}
-              >
-                <div className="folder-icon" style={{ color: folder.color }}>
-                  {folder.icon}
-                </div>
-                <div className="folder-content">
-                  <h3>{folder.name}</h3>
-                  {folder.description && (
-                    <p className="text-secondary">{folder.description}</p>
-                  )}
-                </div>
-              </a>
-            ))}
-          </div>
-        )}
-      </div>
-    </Layout>
+        </div>
+      )}
+    </div>
   );
 };
 
