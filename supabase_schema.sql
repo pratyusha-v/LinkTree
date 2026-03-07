@@ -194,103 +194,22 @@ ALTER TABLE user_streak_stats ENABLE ROW LEVEL SECURITY;
 ALTER TABLE user_milestone_stats ENABLE ROW LEVEL SECURITY;
 ALTER TABLE user_scholar_stats ENABLE ROW LEVEL SECURITY;
 
--- Profiles policies
-CREATE POLICY "Users can view their own profile"
-  ON profiles FOR SELECT
-  USING (auth.uid() = id);
+-- Allow all operations without authentication (for demo/testing)
+CREATE POLICY "Allow all on profiles" ON profiles FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Allow all on folders" ON folders FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Allow all on items" ON items FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Allow all on notes" ON notes FOR ALL USING (true) WITH CHECK (true);
 
-CREATE POLICY "Users can update their own profile"
-  ON profiles FOR UPDATE
-  USING (auth.uid() = id);
-
--- Folders policies
-CREATE POLICY "Users can view their own folders"
-  ON folders FOR SELECT
-  USING (auth.uid() = user_id);
-
-CREATE POLICY "Users can create their own folders"
-  ON folders FOR INSERT
-  WITH CHECK (auth.uid() = user_id);
-
-CREATE POLICY "Users can update their own folders"
-  ON folders FOR UPDATE
-  USING (auth.uid() = user_id);
-
-CREATE POLICY "Users can delete their own folders"
-  ON folders FOR DELETE
-  USING (auth.uid() = user_id);
-
--- Items policies
-CREATE POLICY "Users can view their own items"
-  ON items FOR SELECT
-  USING (auth.uid() = user_id);
-
-CREATE POLICY "Users can create their own items"
-  ON items FOR INSERT
-  WITH CHECK (auth.uid() = user_id);
-
-CREATE POLICY "Users can update their own items"
-  ON items FOR UPDATE
-  USING (auth.uid() = user_id);
-
-CREATE POLICY "Users can delete their own items"
-  ON items FOR DELETE
-  USING (auth.uid() = user_id);
-
--- Notes policies
-CREATE POLICY "Users can view their own notes"
-  ON notes FOR SELECT
-  USING (auth.uid() = user_id);
-
-CREATE POLICY "Users can create their own notes"
-  ON notes FOR INSERT
-  WITH CHECK (auth.uid() = user_id);
-
-CREATE POLICY "Users can update their own notes"
-  ON notes FOR UPDATE
-  USING (auth.uid() = user_id);
-
-CREATE POLICY "Users can delete their own notes"
-  ON notes FOR DELETE
-  USING (auth.uid() = user_id);
-
--- Badge definitions are public (read-only)
+-- Badge definitions are public
 ALTER TABLE badge_definitions ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Anyone can view badge definitions"
-  ON badge_definitions FOR SELECT
-  TO authenticated
-  USING (true);
+CREATE POLICY "Allow all on badge_definitions" ON badge_definitions FOR ALL USING (true) WITH CHECK (true);
 
--- User badges policies
-CREATE POLICY "Users can view their own badges"
-  ON user_badges FOR SELECT
-  USING (auth.uid() = user_id);
-
-CREATE POLICY "Users can update their badge view status"
-  ON user_badges FOR UPDATE
-  USING (auth.uid() = user_id);
-
--- Activity log policies
-CREATE POLICY "Users can view their own activity"
-  ON user_activity_log FOR SELECT
-  USING (auth.uid() = user_id);
-
-CREATE POLICY "Users can log their own activity"
-  ON user_activity_log FOR INSERT
-  WITH CHECK (auth.uid() = user_id);
-
--- Stats policies (read-only for users)
-CREATE POLICY "Users can view their own streak stats"
-  ON user_streak_stats FOR SELECT
-  USING (auth.uid() = user_id);
-
-CREATE POLICY "Users can view their own milestone stats"
-  ON user_milestone_stats FOR SELECT
-  USING (auth.uid() = user_id);
-
-CREATE POLICY "Users can view their own scholar stats"
-  ON user_scholar_stats FOR SELECT
-  USING (auth.uid() = user_id);
+-- Badge system - allow all
+CREATE POLICY "Allow all on user_badges" ON user_badges FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Allow all on user_activity_log" ON user_activity_log FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Allow all on user_streak_stats" ON user_streak_stats FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Allow all on user_milestone_stats" ON user_milestone_stats FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Allow all on user_scholar_stats" ON user_scholar_stats FOR ALL USING (true) WITH CHECK (true);
 
 -- ============================================
 -- SEED DATA: Badge Definitions
