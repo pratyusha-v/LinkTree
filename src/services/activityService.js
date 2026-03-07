@@ -64,3 +64,7 @@ export const activityService = {
     }
   }
 };
+
+// Export standalone function for easier imports
+export const logActivity = (userId, activityType, metadata) => 
+  activityService.logActivity(userId, activityType, metadata);

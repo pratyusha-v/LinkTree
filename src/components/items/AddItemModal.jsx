@@ -28,8 +28,7 @@ export default function AddItemModal({ folderId, userId, onClose }) {
   const createItemMutation = useMutation({
     mutationFn: async (data) => {
       // Create the item
-      const item = await createItem({
-        user_id: userId,
+      const item = await createItem(userId, {
         folder_id: folderId,
         title: data.title,
         url: data.url,
