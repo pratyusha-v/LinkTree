@@ -74,7 +74,7 @@ export default function BadgeCollection({ userBadges = [], allBadges = [] }) {
                     
                     {!isEarned && (
                       <div className="badge-requirement">
-                        {badge.criteria}
+                        {badge.description || 'Locked badge'}
                       </div>
                     )}
                   </div>

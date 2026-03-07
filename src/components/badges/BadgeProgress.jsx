@@ -21,6 +21,16 @@ export default function BadgeProgress({
   const scholarBadges = allBadges?.filter(b => b.category === 'scholar') || [];
   const earnedScholarBadges = scholarBadges.filter(b => earnedBadgeIds.has(b.id));
   
+  // Helper to format milestone criteria
+  const formatMilestoneCriteria = (badge) => {
+    if (!badge) return null;
+    const criteria = badge.criteria;
+    if (criteria && criteria.count) {
+      return `Next: ${criteria.count} items`;
+    }
+    return badge.description;
+  };
+  
   const progressCards = [
     {
       title: 'Current Streak',
@@ -37,7 +47,7 @@ export default function BadgeProgress({
       value: milestoneStats?.total_links_saved || 0,
       unit: 'saved',
       description: nextMilestoneBadge 
-        ? `${nextMilestoneBadge.criteria}` 
+        ? formatMilestoneCriteria(nextMilestoneBadge)
         : 'All milestone badges earned!',
       color: '#3b82f6',
       icon: '🎯'
