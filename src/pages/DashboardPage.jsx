@@ -7,7 +7,7 @@ import { FiPlus, FiFolder } from 'react-icons/fi';
 import './DashboardPage.css';
 
 const DashboardPage = () => {
-  const user = { id: 'demo-user' }; // Demo user for testing without auth
+  const user = { id: '00000000-0000-0000-0000-000000000001' }; // Demo user UUID for testing without auth
   const queryClient = useQueryClient();
   const [showFolderForm, setShowFolderForm] = useState(false);
   const [folderData, setFolderData] = useState({
