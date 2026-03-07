@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../../lib/supabase';
+import { supabase } from '../../services/supabase';
 import { useDebounce } from '../../hooks/useDebounce';
 import SearchResults from './SearchResults';
 import './GlobalSearch.css';
