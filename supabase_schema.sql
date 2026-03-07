@@ -43,12 +43,14 @@ CREATE TABLE folders (
   icon TEXT DEFAULT '📁',
   review_enabled BOOLEAN DEFAULT false,
   review_interval_days INTEGER DEFAULT 7,
+  is_archived BOOLEAN DEFAULT false,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
 CREATE INDEX idx_folders_user_id ON folders(user_id);
 CREATE INDEX idx_folders_created_at ON folders(created_at DESC);
+CREATE INDEX idx_folders_archived ON folders(user_id, is_archived);
 
 -- Items table
 CREATE TABLE items (

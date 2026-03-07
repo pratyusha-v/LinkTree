@@ -1,13 +1,18 @@
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { FiMenu, FiX, FiPlus, FiHome, FiSearch, FiAward } from 'react-icons/fi';
+import { FiMenu, FiX, FiPlus, FiHome, FiSearch, FiAward, FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import '../../styles/Sidebar.css';
 
 export default function Sidebar({ folders, onCreateFolder, isLoading }) {
   const [isOpen, setIsOpen] = useState(true);
+  const [showArchived, setShowArchived] = useState(false);
   const { folderId } = useParams();
 
   const toggleSidebar = () => setIsOpen(!isOpen);
+
+  // Separate active and archived folders
+  const activeFolders = folders?.filter(f => !f.is_archived) || [];
+  const archivedFolders = folders?.filter(f => f.is_archived) || [];
 
   return (
     <>
@@ -54,8 +59,8 @@ export default function Sidebar({ folders, onCreateFolder, isLoading }) {
           <div className="folders-list">
             {isLoading ? (
               <div className="sidebar-loading">Loading folders...</div>
-            ) : folders && folders.length > 0 ? (
-              folders.map(folder => (
+            ) : activeFolders && activeFolders.length > 0 ? (
+              activeFolders.map(folder => (
                 <Link
                   key={folder.id}
                   to={`/folder/${folder.id}`}
@@ -75,6 +80,34 @@ export default function Sidebar({ folders, onCreateFolder, isLoading }) {
             )}
           </div>
         </div>
+
+        {/* Archived Folders Section */}
+        {archivedFolders.length > 0 && (
+          <div className="sidebar-section archived-section">
+            <button 
+              className="section-header-toggle"
+              onClick={() => setShowArchived(!showArchived)}
+            >
+              <h3>Archived ({archivedFolders.length})</h3>
+              {showArchived ? <FiChevronUp size={16} /> : <FiChevronDown size={16} />}
+            </button>
+
+            {showArchived && (
+              <div className="folders-list">
+                {archivedFolders.map(folder => (
+                  <Link
+                    key={folder.id}
+                    to={`/folder/${folder.id}`}
+                    className={`folder-item archived ${folderId === folder.id ? 'active' : ''}`}
+                    style={{ '--folder-color': folder.color }}
+                  >
+                    <span className="folder-name">{folder.name}</span>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </aside>
 
       {/* Overlay for mobile */}
