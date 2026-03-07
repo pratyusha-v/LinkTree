@@ -145,43 +145,7 @@ export default function AddItemModal({ folderId, userId, onClose }) {
           <div className="form-group">
             <label>Type *</label>
             <div className="item-type-grid">
-              File Upload */}
-          <div className="form-group">
-            <label>
-              <FiUpload size={14} />
-              Upload Image/Video
-            </label>
-            <div className="file-upload-area">
-              <input
-                type="file"
-                id="file-upload"
-                accept="image/*,video/*"
-                onChange={handleFileUpload}
-                disabled={uploadingFile}
-                style={{ display: 'none' }}
-              />
-              <label htmlFor="file-upload" className="file-upload-label">
-                {uploadingFile ? (
-                  'Uploading...'
-                ) : formData.thumbnail_url ? (
-                  <>✓ File uploaded</>
-                ) : (
-                  <>Choose file or drag here</>
-                )}
-              </label>
-              {formData.thumbnail_url && (
-                <button
-                  type="button"
-                  className="clear-file-btn"
-                  onClick={() => setFormData({ ...formData, thumbnail_url: '' })}
-                >
-                  Clear
-                </button>
-              )}
-            </div>
-          </div>
-
-          {/* {ITEM_TYPES.map((type) => (
+              {ITEM_TYPES.map((type) => (
                 <button
                   key={type.value}
                   type="button"
@@ -223,6 +187,42 @@ export default function AddItemModal({ folderId, userId, onClose }) {
               onChange={(e) => setFormData({ ...formData, url: e.target.value })}
               placeholder="https://..."
             />
+          </div>
+
+          {/* File Upload */}
+          <div className="form-group">
+            <label>
+              <FiUpload size={14} />
+              Upload Image/Video
+            </label>
+            <div className="file-upload-area">
+              <input
+                type="file"
+                id="file-upload"
+                accept="image/*,video/*"
+                onChange={handleFileUpload}
+                disabled={uploadingFile}
+                style={{ display: 'none' }}
+              />
+              <label htmlFor="file-upload" className="file-upload-label">
+                {uploadingFile ? (
+                  'Uploading...'
+                ) : formData.thumbnail_url ? (
+                  <>✓ File uploaded</>
+                ) : (
+                  <>Choose file or drag here</>
+                )}
+              </label>
+              {formData.thumbnail_url && (
+                <button
+                  type="button"
+                  className="clear-file-btn"
+                  onClick={() => setFormData({ ...formData, thumbnail_url: '' })}
+                >
+                  Clear
+                </button>
+              )}
+            </div>
           </div>
 
           {/* Description */}
