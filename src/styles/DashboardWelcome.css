@@ -263,6 +263,64 @@
   background: #e5e7eb;
 }
 
+/* Recent Badges Section */
+.recent-badges-section {
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.recent-badges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.recent-badge-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  transition: all 0.2s;
+}
+
+.recent-badge-card:hover {
+  border-color: #d1d5db;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.recent-badge-card .badge-icon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+}
+
+.recent-badge-card .badge-info {
+  flex: 1;
+}
+
+.recent-badge-card .badge-info h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 0.25rem;
+}
+
+.recent-badge-card .badge-info p {
+  font-size: 0.875rem;
+  color: #6b7280;
+  line-height: 1.5;
+  margin: 0 0 0.5rem;
+}
+
+.recent-badge-card .badge-date {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  font-weight: 500;
+}
+
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .welcome-header {

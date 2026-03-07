@@ -38,6 +38,22 @@ const DashboardPage = ({ showCreateFolder, setShowCreateFolder }) => {
     }
   });
 
+  const { data: recentBadges } = useQuery({
+    queryKey: ['recent-badges', user.id],
+    queryFn: async () => {
+      const { data } = await supabase
+        .from('user_badges')
+        .select(`
+          *,
+          badge_definitions (*)
+        `)
+        .eq('user_id', user.id)
+        .order('earned_at', { ascending: false })
+        .limit(3);
+      return data;
+    }
+  });
+
   // Create folder mutation
   const createFolder = useMutation({
     mutationFn: (data) => folderService.createFolder(user.id, data),
@@ -74,23 +90,9 @@ const DashboardPage = ({ showCreateFolder, setShowCreateFolder }) => {
         <div className="welcome-content">
           <h1 className="welcome-title">Welcome to LinkTree</h1>
           <p className="welcome-subtitle">
-            Your personal knowledge management system. Organize links, articles, books, and more into folders.
+            Organize your knowledge. Save links, articles, and notes in folders.
           </p>
         </div>
-      </div>
-
-      <div className="stats-grid">
-        {stats.map((stat) => (
-          <div key={stat.label} className="stat-card" style={{ '--stat-color': stat.color }}>
-            <div className="stat-icon">
-              <stat.icon size={24} />
-            </div>
-            <div className="stat-info">
-              <div className="stat-value">{stat.value}</div>
-              <div className="stat-label">{stat.label}</div>
-            </div>
-          </div>
-        ))}
       </div>
 
       <div className="getting-started">
@@ -113,6 +115,44 @@ const DashboardPage = ({ showCreateFolder, setShowCreateFolder }) => {
           </div>
         </div>
       </div>
+
+      <div className="stats-grid">
+        {stats.map((stat) => (
+          <div key={stat.label} className="stat-card" style={{ '--stat-color': stat.color }}>
+            <div className="stat-icon">
+              <stat.icon size={24} />
+            </div>
+            <div className="stat-info">
+              <div className="stat-value">{stat.value}</div>
+              <div className="stat-label">{stat.label}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {recentBadges && recentBadges.length > 0 && (
+        <div className="recent-badges-section">
+          <h2 className="section-title">Recently Earned Badges</h2>
+          <div className="recent-badges-grid">
+            {recentBadges.map((userBadge) => (
+              <div key={userBadge.id} className="recent-badge-card">
+                <div className="badge-icon">{userBadge.badge_definitions.icon}</div>
+                <div className="badge-info">
+                  <h3>{userBadge.badge_definitions.name}</h3>
+                  <p>{userBadge.badge_definitions.description}</p>
+                  <span className="badge-date">
+                    {new Date(userBadge.earned_at).toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                      year: 'numeric'
+                    })}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Create Folder Modal */}
       {showCreateFolder && (
