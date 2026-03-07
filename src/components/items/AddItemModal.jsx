@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createItem } from '../../services/itemService';
 import { logActivity } from '../../services/activityService';
+import { supabase } from '../../services/supabase';
 import toast from 'react-hot-toast';
-import { FiX, FiLink, FiFileText } from 'react-icons/fi';
+import { FiX, FiLink, FiFileText, FiUpload } from 'react-icons/fi';
 import '../../styles/AddItemModal.css';
 
 const ITEM_TYPES = [
@@ -22,8 +23,10 @@ export default function AddItemModal({ folderId, userId, onClose }) {
     url: '',
     description: '',
     item_type: 'article',
-    note_content: ''
+    note_content: '',
+    thumbnail_url: ''
   });
+  const [uploadingFile, setUploadingFile] = useState(false);
 
   const createItemMutation = useMutation({
     mutationFn: async (data) => {
@@ -33,7 +36,8 @@ export default function AddItemModal({ folderId, userId, onClose }) {
         title: data.title,
         url: data.url,
         description: data.description,
-        item_type: data.item_type
+        item_type: data.item_type,
+        thumbnail_url: data.thumbnail_url
       });
 
       // Log activity for badge tracking
@@ -66,6 +70,50 @@ export default function AddItemModal({ folderId, userId, onClose }) {
     }
   });
 
+  const handleFileUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'video/mp4', 'video/webm'];
+    if (!validTypes.includes(file.type)) {
+      toast.error('Please upload an image (JPEG, PNG, GIF, WebP) or video (MP4, WebM)');
+      return;
+    }
+
+    // Validate file size (max 50MB)
+    if (file.size > 50 * 1024 * 1024) {
+      toast.error('File size must be less than 50MB');
+      return;
+    }
+
+    setUploadingFile(true);
+    try {
+      // Upload to Supabase Storage
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${userId}/${Date.now()}.${fileExt}`;
+      
+      const { data, error } = await supabase.storage
+        .from('media')
+        .upload(fileName, file);
+
+      if (error) throw error;
+
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('media')
+        .getPublicUrl(fileName);
+
+      setFormData({ ...formData, thumbnail_url: publicUrl });
+      toast.success('File uploaded successfully!');
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      toast.error('Failed to upload file');
+    } finally {
+      setUploadingFile(false);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     
@@ -97,7 +145,43 @@ export default function AddItemModal({ folderId, userId, onClose }) {
           <div className="form-group">
             <label>Type *</label>
             <div className="item-type-grid">
-              {ITEM_TYPES.map((type) => (
+              File Upload */}
+          <div className="form-group">
+            <label>
+              <FiUpload size={14} />
+              Upload Image/Video
+            </label>
+            <div className="file-upload-area">
+              <input
+                type="file"
+                id="file-upload"
+                accept="image/*,video/*"
+                onChange={handleFileUpload}
+                disabled={uploadingFile}
+                style={{ display: 'none' }}
+              />
+              <label htmlFor="file-upload" className="file-upload-label">
+                {uploadingFile ? (
+                  'Uploading...'
+                ) : formData.thumbnail_url ? (
+                  <>✓ File uploaded</>
+                ) : (
+                  <>Choose file or drag here</>
+                )}
+              </label>
+              {formData.thumbnail_url && (
+                <button
+                  type="button"
+                  className="clear-file-btn"
+                  onClick={() => setFormData({ ...formData, thumbnail_url: '' })}
+                >
+                  Clear
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* {ITEM_TYPES.map((type) => (
                 <button
                   key={type.value}
                   type="button"

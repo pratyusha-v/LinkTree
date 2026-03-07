@@ -119,6 +119,48 @@
   line-height: 1.5;
 }
 
+/* File Upload */
+.file-upload-area {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.file-upload-label {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 2px dashed #d1d5db;
+  border-radius: 6px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-size: 0.875rem;
+  color: #6b7280;
+  background: #f9fafb;
+}
+
+.file-upload-label:hover {
+  border-color: #3b82f6;
+  background: #eff6ff;
+  color: #3b82f6;
+}
+
+.clear-file-btn {
+  padding: 0.625rem 1rem;
+  background: #fee2e2;
+  color: #dc2626;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.clear-file-btn:hover {
+  background: #fecaca;
+}
+
 /* Form Actions */
 .form-actions {
   display: flex;

@@ -24,9 +24,9 @@ export default function Sidebar({ folders, onCreateFolder, isLoading }) {
 
         {/* Main Navigation */}
         <nav className="sidebar-nav">
-          <Link to="/" className={`nav-item ${!folderId ? 'active' : ''}`}>
+          <Link to="/" className="nav-item">
             <FiHome size={18} />
-            <span>All Folders</span>
+            <span>Home</span>
           </Link>
           <Link to="/search" className="nav-item">
             <FiSearch size={18} />

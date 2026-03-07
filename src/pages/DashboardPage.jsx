@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { folderService } from '../services/folderService';
 import { getItems } from '../services/itemService';
 import { supabase } from '../services/supabase';
+import AddItemFab from '../components/items/AddItemFab';
 import toast from 'react-hot-toast';
 import { FiPlus, FiFolder, FiLink, FiAward } from 'react-icons/fi';
 import '../styles/DashboardWelcome.css';
@@ -177,6 +178,8 @@ const DashboardPage = ({ showCreateFolder, setShowCreateFolder }) => {
           </div>
         </div>
       )}
+
+      <AddItemFab userId={user.id} />
     </div>
   );
 };
