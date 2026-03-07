@@ -368,14 +368,15 @@ INSERT INTO user_activity_log (user_id, activity_type, activity_date, activity_t
 ('00000000-0000-0000-0000-000000000001', 'link_saved', '2026-02-05', '2026-02-05 09:30:00+00', '{"link_id":"d4444444-4444-4444-4444-444444444444"}'),
 ('00000000-0000-0000-0000-000000000001', 'link_saved', '2026-02-08', '2026-02-08 06:45:00+00', '{"link_id":"e3333333-3333-3333-3333-333333333333"}'),
 ('00000000-0000-0000-0000-000000000001', 'link_saved', '2026-02-15', '2026-02-15 10:15:00+00', '{"link_id":"f3333333-3333-3333-3333-333333333333"}'),
-('00000000-0000-0000-0000-000000000001', 'link_saved', '2026-03-01', '2026-03-01 11:30:00+00', '{"link_id":"a1111111-1111-1111-1111-111111111111"}');
+('00000000-0000-0000-0000-000000000001', 'link_saved', '2026-02-25', '2026-02-25 23:30:00+00', '{"link_id":"d7777777-7777-7777-7777-777777777777"}');
 
--- Update milestone stats for demo user
+-- Update milestone stats for demo user with realistic numbers
 INSERT INTO user_milestone_stats (user_id, total_links_saved, total_links_active, first_save_at, last_save_at) VALUES
-('00000000-0000-0000-0000-000000000001', 27, 27, '2025-12-02 08:15:00+00', '2026-03-01 11:30:00+00');
+('00000000-0000-0000-0000-000000000001', 35, 27, '2025-12-02 08:15:00+00', '2026-02-25 23:30:00+00');
 
--- Award some badges to demo user
+-- Award badges to demo user (based on their activity pattern)
 INSERT INTO user_badges (user_id, badge_id, earned_at, progress_data, is_new) VALUES
 ('00000000-0000-0000-0000-000000000001', 'milestone_1', '2025-12-02 08:15:00+00', '{"count":1}', false),
 ('00000000-0000-0000-0000-000000000001', 'milestone_10', '2026-01-06 12:00:00+00', '{"count":10}', false),
-('00000000-0000-0000-0000-000000000001', 'streak_daily_7', '2026-01-09 10:00:00+00', '{"streak":7}', false);
+('00000000-0000-0000-0000-000000000001', 'streak_daily_7', '2026-01-13 14:30:00+00', '{"streak":7}', false),
+('00000000-0000-0000-0000-000000000001', 'scholar_night', '2026-02-01 20:30:00+00', '{"night_saves":18,"total_saves":35,"percentage":51}', false);
