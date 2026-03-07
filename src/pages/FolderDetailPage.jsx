@@ -1,14 +1,18 @@
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getFolders } from '../services/folderService';
 import { getItemsByFolder } from '../services/itemService';
 import { supabase } from '../services/supabase';
 import ItemList from '../components/items/ItemList';
+import AddItemModal from '../components/items/AddItemModal';
+import { FiPlus } from 'react-icons/fi';
 import '../styles/FolderDetailPage.css';
 
 export default function FolderDetailPage() {
   const { folderId } = useParams();
   const user = { id: '00000000-0000-0000-0000-000000000001' };
+  const [showAddModal, setShowAddModal] = useState(false);
 
   // Get folder details
   const { data: folders } = useQuery({
@@ -59,17 +63,23 @@ export default function FolderDetailPage() {
           <div className="folder-icon-large" style={{ color: folder.color }}>
             {folder.icon}
           </div>
-          <div>
+          <div className="folder-info">
             <h1 className="folder-title">{folder.name}</h1>
             {folder.description && (
               <p className="folder-description">{folder.description}</p>
             )}
           </div>
         </div>
-        <div className="folder-stats">
-          <span className="stat-item">
-            {items?.length || 0} {items?.length === 1 ? 'item' : 'items'}
-          </span>
+        <div className="folder-actions">
+          <div className="folder-stats">
+            <span className="stat-item">
+              {items?.length || 0} {items?.length === 1 ? 'item' : 'items'}
+            </span>
+          </div>
+          <button className="add-item-btn" onClick={() => setShowAddModal(true)}>
+            <FiPlus size={18} />
+            Add
+          </button>
         </div>
       </div>
 
@@ -83,6 +93,14 @@ export default function FolderDetailPage() {
           }
         }}
       />
+
+      {showAddModal && (
+        <AddItemModal
+          folderId={folderId}
+          userId={user.id}
+          onClose={() => setShowAddModal(false)}
+        />
+      )}
     </div>
   );
 }
