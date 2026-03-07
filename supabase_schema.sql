@@ -274,3 +274,108 @@ CREATE TRIGGER update_items_updated_at BEFORE UPDATE ON items
 
 CREATE TRIGGER update_notes_updated_at BEFORE UPDATE ON notes
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- ============================================
+-- SYNTHETIC DATA (Demo User)
+-- ============================================
+
+-- Insert folders for demo user
+INSERT INTO folders (id, user_id, name, description, color, icon, created_at) VALUES
+('11111111-1111-1111-1111-111111111111', 'demo-user', 'Web Development', 'Articles and resources about frontend and backend development', '#3b82f6', '💻', '2025-12-01 09:30:00+00'),
+('22222222-2222-2222-2222-222222222222', 'demo-user', 'Design Inspiration', 'Beautiful UI/UX designs and creative ideas', '#8b5cf6', '🎨', '2025-12-05 14:20:00+00'),
+('33333333-3333-3333-3333-333333333333', 'demo-user', 'AI & Machine Learning', 'Latest in AI, ML, and data science', '#10b981', '🤖', '2025-12-10 11:45:00+00'),
+('44444444-4444-4444-4444-444444444444', 'demo-user', 'Productivity', 'Tips and tools for better productivity', '#f59e0b', '⚡', '2025-12-15 16:10:00+00'),
+('55555555-5555-5555-5555-555555555555', 'demo-user', 'Books to Read', 'Book recommendations and reviews', '#ef4444', '📚', '2026-01-05 10:00:00+00'),
+('66666666-6666-6666-6666-666666666666', 'demo-user', 'Personal Growth', 'Self-improvement and mindfulness content', '#ec4899', '🌱', '2026-01-20 13:30:00+00');
+
+-- Insert items (links) across folders
+INSERT INTO items (id, user_id, folder_id, title, url, item_type, description, created_at) VALUES
+-- Web Development folder
+('a1111111-1111-1111-1111-111111111111', 'demo-user', '11111111-1111-1111-1111-111111111111', 'React 19 Features Overview', 'https://react.dev/blog/2024/react-19', 'article', 'Deep dive into React 19 new features and improvements', '2025-12-02 08:15:00+00'),
+('a2222222-2222-2222-2222-222222222222', 'demo-user', '11111111-1111-1111-1111-111111111111', 'CSS Grid Mastery', 'https://css-tricks.com/snippets/css/complete-guide-grid/', 'article', 'Complete guide to CSS Grid layout', '2025-12-08 19:30:00+00'),
+('a3333333-3333-3333-3333-333333333333', 'demo-user', '11111111-1111-1111-1111-111111111111', 'TypeScript Best Practices', 'https://typescript-guide.dev', 'article', 'Advanced TypeScript patterns and practices', '2025-12-15 07:45:00+00'),
+('a4444444-4444-4444-4444-444444444444', 'demo-user', '11111111-1111-1111-1111-111111111111', 'Building APIs with Node.js', 'https://nodejs.org/en/docs/', 'article', 'RESTful API design and implementation', '2026-01-10 21:20:00+00'),
+('a5555555-5555-5555-5555-555555555555', 'demo-user', '11111111-1111-1111-1111-111111111111', 'WebAssembly Tutorial', 'https://webassembly.org', 'video', 'Introduction to WebAssembly and its use cases', '2026-01-25 06:30:00+00'),
+
+-- Design folder
+('b1111111-1111-1111-1111-111111111111', 'demo-user', '22222222-2222-2222-2222-222222222222', 'Dribbble Top Designs 2024', 'https://dribbble.com/shots/popular', 'article', 'Collection of the best UI designs', '2025-12-07 15:00:00+00'),
+('b2222222-2222-2222-2222-222222222222', 'demo-user', '22222222-2222-2222-2222-222222222222', 'Color Theory for Developers', 'https://colortheory.dev', 'article', 'Understanding color psychology in design', '2025-12-20 10:30:00+00'),
+('b3333333-3333-3333-3333-333333333333', 'demo-user', '22222222-2222-2222-2222-222222222222', 'Figma Advanced Techniques', 'https://figma.com/resources', 'video', 'Pro tips for Figma design workflow', '2026-01-08 22:15:00+00'),
+('b4444444-4444-4444-4444-444444444444', 'demo-user', '22222222-2222-2222-2222-222222222222', 'Microinteractions Guide', 'https://microinteractions.com', 'article', 'Creating delightful user interactions', '2026-02-01 08:45:00+00'),
+
+-- AI & ML folder
+('c1111111-1111-1111-1111-111111111111', 'demo-user', '33333333-3333-3333-3333-333333333333', 'GPT-4 Architecture Explained', 'https://openai.com/research', 'article', 'How GPT-4 works under the hood', '2025-12-12 09:00:00+00'),
+('c2222222-2222-2222-2222-222222222222', 'demo-user', '33333333-3333-3333-3333-333333333333', 'Machine Learning Crash Course', 'https://developers.google.com/machine-learning', 'video', 'Google ML course for beginners', '2025-12-28 20:00:00+00'),
+('c3333333-3333-3333-3333-333333333333', 'demo-user', '33333333-3333-3333-3333-333333333333', 'Neural Networks from Scratch', 'https://nnfs.io', 'article', 'Building neural networks without libraries', '2026-01-15 07:15:00+00'),
+('c4444444-4444-4444-4444-444444444444', 'demo-user', '33333333-3333-3333-3333-333333333333', 'Stable Diffusion Tutorial', 'https://stability.ai', 'video', 'Creating AI art with Stable Diffusion', '2026-01-30 23:00:00+00'),
+
+-- Productivity folder
+('d1111111-1111-1111-1111-111111111111', 'demo-user', '44444444-4444-4444-4444-444444444444', 'Getting Things Done Method', 'https://gettingthingsdone.com', 'article', 'David Allen GTD productivity system', '2025-12-18 11:20:00+00'),
+('d2222222-2222-2222-2222-222222222222', 'demo-user', '44444444-4444-4444-4444-444444444444', 'Deep Work by Cal Newport', 'https://calnewport.com/books/deep-work/', 'book', 'Rules for focused success in a distracted world', '2026-01-03 05:30:00+00'),
+('d3333333-3333-3333-3333-333333333333', 'demo-user', '44444444-4444-4444-4444-444444444444', 'Notion Setup Guide', 'https://notion.so/guides', 'article', 'Organizing your life with Notion', '2026-01-18 14:45:00+00'),
+('d4444444-4444-4444-4444-444444444444', 'demo-user', '44444444-4444-4444-4444-444444444444', 'Pomodoro Technique Explained', 'https://francescocirillo.com/pages/pomodoro-technique', 'article', 'Time management using 25-minute intervals', '2026-02-05 09:30:00+00'),
+
+-- Books folder
+('e1111111-1111-1111-1111-111111111111', 'demo-user', '55555555-5555-5555-5555-555555555555', 'Atomic Habits - James Clear', 'https://jamesclear.com/atomic-habits', 'book', 'How to build better habits', '2026-01-06 12:00:00+00'),
+('e2222222-2222-2222-2222-222222222222', 'demo-user', '55555555-5555-5555-5555-555555555555', 'The Pragmatic Programmer', 'https://pragprog.com', 'book', 'Essential reading for software developers', '2026-01-22 17:30:00+00'),
+('e3333333-3333-3333-3333-333333333333', 'demo-user', '55555555-5555-5555-5555-555555555555', 'Thinking, Fast and Slow', 'https://www.goodreads.com/book/show/11468377', 'book', 'Daniel Kahneman on decision making', '2026-02-08 06:45:00+00'),
+
+-- Personal Growth folder
+('f1111111-1111-1111-1111-111111111111', 'demo-user', '66666666-6666-6666-6666-666666666666', 'Meditation for Beginners', 'https://headspace.com/meditation', 'video', 'Getting started with mindfulness meditation', '2026-01-21 07:00:00+00'),
+('f2222222-2222-2222-2222-222222222222', 'demo-user', '66666666-6666-6666-6666-666666666666', 'Stoic Philosophy Guide', 'https://dailystoic.com', 'article', 'Practical wisdom from ancient stoics', '2026-02-03 20:30:00+00'),
+('f3333333-3333-3333-3333-333333333333', 'demo-user', '66666666-6666-6666-6666-666666666666', 'The Power of Now', 'https://eckharttolle.com', 'book', 'Spiritual enlightenment and presence', '2026-02-15 10:15:00+00');
+
+-- Insert some notes
+INSERT INTO notes (user_id, item_id, content, created_at) VALUES
+('demo-user', 'a1111111-1111-1111-1111-111111111111', 'React Server Components look really promising! Need to try this in my next project.', '2025-12-02 08:20:00+00'),
+('demo-user', 'c1111111-1111-1111-1111-111111111111', 'Fascinating breakdown of transformer architecture. The attention mechanism is key to understanding GPT.', '2025-12-12 09:15:00+00'),
+('demo-user', 'd2222222-2222-2222-2222-222222222222', 'Started reading this. Chapter 1 on deep work rules is mind-blowing. No more shallow work!', '2026-01-03 06:00:00+00'),
+('demo-user', 'e1111111-1111-1111-1111-111111111111', 'The 1% improvement principle is so powerful. Small changes compound over time.', '2026-01-06 12:30:00+00'),
+('demo-user', 'b3333333-3333-3333-3333-333333333333', 'Auto-layout and components are game changers. Shared this with the design team.', '2026-01-08 22:30:00+00');
+
+-- Insert activity log (spanning 3 months with varied times for scholar badges)
+INSERT INTO user_activity_log (user_id, activity_type, activity_date, activity_timestamp, metadata) VALUES
+-- December 2025 (Morning heavy - 12 saves, 8 morning)
+('demo-user', 'link_saved', '2025-12-02', '2025-12-02 08:15:00+00', '{"link_id":"a1111111-1111-1111-1111-111111111111"}'),
+('demo-user', 'link_saved', '2025-12-05', '2025-12-05 14:20:00+00', '{"link_id":"22222222-2222-2222-2222-222222222222"}'),
+('demo-user', 'link_saved', '2025-12-07', '2025-12-07 15:00:00+00', '{"link_id":"b1111111-1111-1111-1111-111111111111"}'),
+('demo-user', 'link_saved', '2025-12-08', '2025-12-08 19:30:00+00', '{"link_id":"a2222222-2222-2222-2222-222222222222"}'),
+('demo-user', 'link_saved', '2025-12-10', '2025-12-10 11:45:00+00', '{"link_id":"33333333-3333-3333-3333-333333333333"}'),
+('demo-user', 'link_saved', '2025-12-12', '2025-12-12 09:00:00+00', '{"link_id":"c1111111-1111-1111-1111-111111111111"}'),
+('demo-user', 'link_saved', '2025-12-15', '2025-12-15 07:45:00+00', '{"link_id":"a3333333-3333-3333-3333-333333333333"}'),
+('demo-user', 'link_saved', '2025-12-15', '2025-12-15 16:10:00+00', '{"link_id":"44444444-4444-4444-4444-444444444444"}'),
+('demo-user', 'link_saved', '2025-12-18', '2025-12-18 11:20:00+00', '{"link_id":"d1111111-1111-1111-1111-111111111111"}'),
+('demo-user', 'link_saved', '2025-12-20', '2025-12-20 10:30:00+00', '{"link_id":"b2222222-2222-2222-2222-222222222222"}'),
+('demo-user', 'link_saved', '2025-12-28', '2025-12-28 20:00:00+00', '{"link_id":"c2222222-2222-2222-2222-222222222222"}'),
+
+-- January 2026 (Mixed times - 15 saves)
+('demo-user', 'link_saved', '2026-01-03', '2026-01-03 05:30:00+00', '{"link_id":"d2222222-2222-2222-2222-222222222222"}'),
+('demo-user', 'link_saved', '2026-01-05', '2026-01-05 10:00:00+00', '{"link_id":"55555555-5555-5555-5555-555555555555"}'),
+('demo-user', 'link_saved', '2026-01-06', '2026-01-06 12:00:00+00', '{"link_id":"e1111111-1111-1111-1111-111111111111"}'),
+('demo-user', 'link_saved', '2026-01-08', '2026-01-08 22:15:00+00', '{"link_id":"b3333333-3333-3333-3333-333333333333"}'),
+('demo-user', 'link_saved', '2026-01-10', '2026-01-10 21:20:00+00', '{"link_id":"a4444444-4444-4444-4444-444444444444"}'),
+('demo-user', 'link_saved', '2026-01-15', '2026-01-15 07:15:00+00', '{"link_id":"c3333333-3333-3333-3333-333333333333"}'),
+('demo-user', 'link_saved', '2026-01-18', '2026-01-18 14:45:00+00', '{"link_id":"d3333333-3333-3333-3333-333333333333"}'),
+('demo-user', 'link_saved', '2026-01-20', '2026-01-20 13:30:00+00', '{"link_id":"66666666-6666-6666-6666-666666666666"}'),
+('demo-user', 'link_saved', '2026-01-21', '2026-01-21 07:00:00+00', '{"link_id":"f1111111-1111-1111-1111-111111111111"}'),
+('demo-user', 'link_saved', '2026-01-22', '2026-01-22 17:30:00+00', '{"link_id":"e2222222-2222-2222-2222-222222222222"}'),
+('demo-user', 'link_saved', '2026-01-25', '2026-01-25 06:30:00+00', '{"link_id":"a5555555-5555-5555-5555-555555555555"}'),
+('demo-user', 'link_saved', '2026-01-30', '2026-01-30 23:00:00+00', '{"link_id":"c4444444-4444-4444-4444-444444444444"}'),
+
+-- February 2026 (Recent - 6 saves)
+('demo-user', 'link_saved', '2026-02-01', '2026-02-01 08:45:00+00', '{"link_id":"b4444444-4444-4444-4444-444444444444"}'),
+('demo-user', 'link_saved', '2026-02-03', '2026-02-03 20:30:00+00', '{"link_id":"f2222222-2222-2222-2222-222222222222"}'),
+('demo-user', 'link_saved', '2026-02-05', '2026-02-05 09:30:00+00', '{"link_id":"d4444444-4444-4444-4444-444444444444"}'),
+('demo-user', 'link_saved', '2026-02-08', '2026-02-08 06:45:00+00', '{"link_id":"e3333333-3333-3333-3333-333333333333"}'),
+('demo-user', 'link_saved', '2026-02-15', '2026-02-15 10:15:00+00', '{"link_id":"f3333333-3333-3333-3333-333333333333"}'),
+('demo-user', 'link_saved', '2026-03-01', '2026-03-01 11:30:00+00', '{"link_id":"a1111111-1111-1111-1111-111111111111"}');
+
+-- Update milestone stats for demo user
+INSERT INTO user_milestone_stats (user_id, total_links_saved, total_links_active, first_save_at, last_save_at) VALUES
+('demo-user', 27, 27, '2025-12-02 08:15:00+00', '2026-03-01 11:30:00+00');
+
+-- Award some badges to demo user
+INSERT INTO user_badges (user_id, badge_id, earned_at, progress_data, is_new) VALUES
+('demo-user', 'milestone_1', '2025-12-02 08:15:00+00', '{"count":1}', false),
+('demo-user', 'milestone_10', '2026-01-06 12:00:00+00', '{"count":10}', false),
+('demo-user', 'streak_daily_7', '2026-01-09 10:00:00+00', '{"streak":7}', false);
