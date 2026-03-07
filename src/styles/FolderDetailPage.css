@@ -7,6 +7,10 @@
   padding: 3rem 2rem 1.5rem;
   border-bottom: 1px solid #e5e7eb;
   background: linear-gradient(to bottom, #f9fafb 0%, #ffffff 100%);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
 }
 
 .folder-header-content {
@@ -72,26 +76,19 @@
   cursor: pointer;
   transition: all 0.15s;
   white-space: nowrap;
-}  flex-direction: column;
-    gap: 1rem;
-  }
+}
 
-  .folder-header-content {
-    flex-direction: column;
-    gap: 1rem;
-  }
+.add-item-btn:hover {
+  background: #2563eb;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
 
-  .folder-icon-large {
-    font-size: 2.5rem;
-  }
-
-  .folder-title {
-    font-size: 2rem;
-  }
-
-  .folder-actions {
-    width: 100%;
-    justify-content: space-between
+.folder-not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
   text-align: center;
   color: #6b7280;
 }
@@ -110,6 +107,8 @@
 @media (max-width: 768px) {
   .folder-header {
     padding: 2rem 1rem 1rem;
+    flex-direction: column;
+    gap: 1rem;
   }
 
   .folder-header-content {
@@ -123,6 +122,11 @@
 
   .folder-title {
     font-size: 2rem;
+  }
+
+  .folder-actions {
+    width: 100%;
+    justify-content: space-between;
   }
 
   .folder-stats {
