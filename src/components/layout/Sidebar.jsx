@@ -34,7 +34,7 @@ export default function Sidebar({ folders, onCreateFolder, isLoading }) {
           </Link>
           <Link to="/badges" className="nav-item">
             <FiAward size={18} />
-            <span>Badges</span>
+            <span>Stats & Badges</span>
           </Link>
         </nav>
 
@@ -62,7 +62,6 @@ export default function Sidebar({ folders, onCreateFolder, isLoading }) {
                   className={`folder-item ${folderId === folder.id ? 'active' : ''}`}
                   style={{ '--folder-color': folder.color }}
                 >
-                  <span className="folder-icon">{folder.icon}</span>
                   <span className="folder-name">{folder.name}</span>
                 </Link>
               ))

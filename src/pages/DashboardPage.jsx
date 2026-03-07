@@ -13,9 +13,7 @@ const DashboardPage = ({ showCreateFolder, setShowCreateFolder }) => {
   const queryClient = useQueryClient();
   const [folderData, setFolderData] = useState({
     name: '',
-    description: '',
-    color: '#3b82f6',
-    icon: '📁'
+    description: ''
   });
 
   // Fetch data
@@ -47,7 +45,7 @@ const DashboardPage = ({ showCreateFolder, setShowCreateFolder }) => {
       queryClient.invalidateQueries(['folders']);
       toast.success('Folder created!');
       setShowCreateFolder(false);
-      setFolderData({ name: '', description: '', color: '#3b82f6', icon: '📁' });
+      setFolderData({ name: '', description: '' });
     },
     onError: (error) => {
       toast.error('Failed to create folder');
@@ -132,26 +130,6 @@ const DashboardPage = ({ showCreateFolder, setShowCreateFolder }) => {
                   required
                   autoFocus
                 />
-              </div>
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Icon</label>
-                  <input
-                    type="text"
-                    value={folderData.icon}
-                    onChange={(e) => setFolderData({ ...folderData, icon: e.target.value })}
-                    placeholder="📁"
-                    maxLength={2}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Color</label>
-                  <input
-                    type="color"
-                    value={folderData.color}
-                    onChange={(e) => setFolderData({ ...folderData, color: e.target.value })}
-                  />
-                </div>
               </div>
               <div className="form-group">
                 <label>Description</label>

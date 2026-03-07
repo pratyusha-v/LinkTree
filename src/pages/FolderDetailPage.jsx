@@ -60,9 +60,6 @@ export default function FolderDetailPage() {
     <div className="folder-detail-page">
       <div className="folder-header">
         <div className="folder-header-content">
-          <div className="folder-icon-large" style={{ color: folder.color }}>
-            {folder.icon}
-          </div>
           <div className="folder-info">
             <h1 className="folder-title">{folder.name}</h1>
             {folder.description && (

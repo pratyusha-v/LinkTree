@@ -31,9 +31,7 @@ export default function AddItemFab({ userId }) {
     note_content: '',
     thumbnail_url: '',
     folder_id: '',
-    new_folder_name: '',
-    new_folder_icon: '📁',
-    new_folder_color: '#3b82f6'
+    new_folder_name: ''
   });
 
   const { data: folders } = useQuery({
@@ -59,9 +57,7 @@ export default function AddItemFab({ userId }) {
       // Create folder if needed
       if (showNewFolder && data.new_folder_name) {
         const newFolder = await createFolder(userId, {
-          name: data.new_folder_name,
-          icon: data.new_folder_icon,
-          color: data.new_folder_color
+          name: data.new_folder_name
         });
         folderId = newFolder.id;
       }
@@ -177,9 +173,7 @@ export default function AddItemFab({ userId }) {
       note_content: '',
       thumbnail_url: '',
       folder_id: '',
-      new_folder_name: '',
-      new_folder_icon: '📁',
-      new_folder_color: '#3b82f6'
+      new_folder_name: ''
     });
   };
 
@@ -216,7 +210,7 @@ export default function AddItemFab({ userId }) {
                       <option value="">Select a folder...</option>
                       {folders?.map((folder) => (
                         <option key={folder.id} value={folder.id}>
-                          {folder.icon} {folder.name}
+                          {folder.name}
                         </option>
                       ))}
                     </select>
@@ -233,25 +227,10 @@ export default function AddItemFab({ userId }) {
                     <div className="folder-input-row">
                       <input
                         type="text"
-                        value={formData.new_folder_icon}
-                        onChange={(e) => setFormData({ ...formData, new_folder_icon: e.target.value })}
-                        placeholder="📁"
-                        maxLength={2}
-                        className="icon-input"
-                      />
-                      <input
-                        type="text"
                         value={formData.new_folder_name}
                         onChange={(e) => setFormData({ ...formData, new_folder_name: e.target.value })}
                         placeholder="Folder name"
                         required
-                        className="flex-1"
-                      />
-                      <input
-                        type="color"
-                        value={formData.new_folder_color}
-                        onChange={(e) => setFormData({ ...formData, new_folder_color: e.target.value })}
-                        className="color-input"
                       />
                     </div>
                     <button
