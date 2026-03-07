@@ -370,9 +370,15 @@ INSERT INTO user_activity_log (user_id, activity_type, activity_date, activity_t
 ('00000000-0000-0000-0000-000000000001', 'link_saved', '2026-02-15', '2026-02-15 10:15:00+00', '{"link_id":"f3333333-3333-3333-3333-333333333333"}'),
 ('00000000-0000-0000-0000-000000000001', 'link_saved', '2026-02-25', '2026-02-25 23:30:00+00', '{"link_id":"d7777777-7777-7777-7777-777777777777"}');
 
--- Update milestone stats for demo user with realistic numbers
+-- Update stats for demo user
 INSERT INTO user_milestone_stats (user_id, total_links_saved, total_links_active, first_save_at, last_save_at) VALUES
 ('00000000-0000-0000-0000-000000000001', 35, 27, '2025-12-02 08:15:00+00', '2026-02-25 23:30:00+00');
+
+INSERT INTO user_streak_stats (user_id, current_daily_streak, longest_daily_streak, last_activity_date) VALUES
+('00000000-0000-0000-0000-000000000001', 7, 12, '2026-02-25');
+
+INSERT INTO user_scholar_stats (user_id, morning_saves_30d, afternoon_saves_30d, night_saves_30d, total_saves_30d, morning_share, afternoon_share, night_share, current_scholar_badge) VALUES
+('00000000-0000-0000-0000-000000000001', 8, 9, 18, 35, 0.2286, 0.2571, 0.5143, 'night_scholar');
 
 -- Award badges to demo user (based on their activity pattern)
 INSERT INTO user_badges (user_id, badge_id, earned_at, progress_data, is_new) VALUES

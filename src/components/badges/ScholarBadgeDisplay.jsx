@@ -7,17 +7,17 @@ const TIME_PERIODS = [
 ];
 
 export default function ScholarBadgeDisplay({ scholarStats = {}, userBadges = [] }) {
-  const totalSaves = scholarStats?.total_saves || 0;
-  const morningCount = scholarStats?.morning_saves || 0;
-  const afternoonCount = scholarStats?.afternoon_saves || 0;
-  const nightCount = scholarStats?.night_saves || 0;
+  const totalSaves = scholarStats?.total_saves_30d || 0;
+  const morningCount = scholarStats?.morning_saves_30d || 0;
+  const afternoonCount = scholarStats?.afternoon_saves_30d || 0;
+  const nightCount = scholarStats?.night_saves_30d || 0;
 
   // Check which scholar badges are earned
-  const scholarBadgeTypes = ['morning_scholar', 'afternoon_scholar', 'night_scholar'];
+  const scholarBadgeIds = ['morning_scholar', 'afternoon_scholar', 'night_scholar'];
   const earnedScholarBadges = new Set(
     userBadges
-      ?.filter(ub => scholarBadgeTypes.includes(ub.badge?.badge_type))
-      .map(ub => ub.badge?.badge_type) || []
+      ?.filter(ub => scholarBadgeIds.includes(ub.badge_id))
+      .map(ub => ub.badge_id) || []
   );
 
   const stats = [

@@ -10,21 +10,21 @@ export default function BadgeProgress({
   const earnedBadgeIds = new Set(userBadges?.map(ub => ub.badge_id) || []);
 
   // Calculate next streak badge
-  const streakBadges = allBadges?.filter(b => b.badge_type === 'streak') || [];
+  const streakBadges = allBadges?.filter(b => b.category === 'streak') || [];
   const nextStreakBadge = streakBadges.find(b => !earnedBadgeIds.has(b.id));
   
   // Calculate next milestone badge
-  const milestoneBadges = allBadges?.filter(b => b.badge_type === 'milestone') || [];
+  const milestoneBadges = allBadges?.filter(b => b.category === 'milestone') || [];
   const nextMilestoneBadge = milestoneBadges.find(b => !earnedBadgeIds.has(b.id));
   
   // Calculate scholar badge progress
-  const scholarBadges = allBadges?.filter(b => b.badge_type === 'scholar') || [];
+  const scholarBadges = allBadges?.filter(b => b.category === 'scholar') || [];
   const earnedScholarBadges = scholarBadges.filter(b => earnedBadgeIds.has(b.id));
   
   const progressCards = [
     {
       title: 'Current Streak',
-      value: streakStats?.current_streak || 0,
+      value: streakStats?.current_daily_streak || 0,
       unit: 'days',
       description: nextStreakBadge 
         ? `Next badge: ${nextStreakBadge.name}` 
@@ -34,7 +34,7 @@ export default function BadgeProgress({
     },
     {
       title: 'Total Items',
-      value: milestoneStats?.total_items_saved || 0,
+      value: milestoneStats?.total_links_saved || 0,
       unit: 'saved',
       description: nextMilestoneBadge 
         ? `${nextMilestoneBadge.criteria}` 

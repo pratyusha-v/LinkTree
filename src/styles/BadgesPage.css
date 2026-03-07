@@ -26,7 +26,40 @@
   color: #6b7280;
   font-size: 1.125rem;
 }
+.loading-text {
+  margin-bottom: 1rem;
+}
 
+.loading-bar {
+  max-width: 400px;
+  margin: 0 auto;
+  height: 4px;
+  background: #e5e7eb;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.loading-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  border-radius: 2px;
+  animation: loading-progress 1.5s ease-in-out infinite;
+}
+
+@keyframes loading-progress {
+  0% {
+    width: 0%;
+    margin-left: 0%;
+  }
+  50% {
+    width: 60%;
+    margin-left: 20%;
+  }
+  100% {
+    width: 0%;
+    margin-left: 100%;
+  }
+}
 .progress-section,
 .scholar-section,
 .badges-section {

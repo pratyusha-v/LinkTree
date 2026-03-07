@@ -12,10 +12,10 @@ export default function BadgeCollection({ userBadges = [], allBadges = [] }) {
   const earnedBadgeIds = new Set(userBadges?.map(ub => ub.badge_id) || []);
 
   const groupedBadges = allBadges?.reduce((acc, badge) => {
-    if (!acc[badge.badge_type]) {
-      acc[badge.badge_type] = [];
+    if (!acc[badge.category]) {
+      acc[badge.category] = [];
     }
-    acc[badge.badge_type].push(badge);
+    acc[badge.category].push(badge);
     return acc;
   }, {}) || {};
 
@@ -50,7 +50,7 @@ export default function BadgeCollection({ userBadges = [], allBadges = [] }) {
                 >
                   <div className="badge-visual">
                     {isEarned ? (
-                      <span className="badge-emoji">{getBadgeIcon(badge.badge_type)}</span>
+                      <span className="badge-emoji">{getBadgeIcon(badge.category)}</span>
                     ) : (
                       <div className="badge-locked">
                         <FiLock size={32} />
@@ -64,7 +64,7 @@ export default function BadgeCollection({ userBadges = [], allBadges = [] }) {
                     
                     {isEarned && userBadge && (
                       <div className="badge-earned-date">
-                        Earned {new Date(userBadge.awarded_at).toLocaleDateString('en-US', {
+                        Earned {new Date(userBadge.earned_at).toLocaleDateString('en-US', {
                           month: 'short',
                           day: 'numeric',
                           year: 'numeric'

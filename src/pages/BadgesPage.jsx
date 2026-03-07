@@ -33,7 +33,7 @@ export default function BadgesPage() {
       const { data, error } = await supabase
         .from('badge_definitions')
         .select('*')
-        .order('badge_type', { ascending: true })
+        .order('category', { ascending: true })
         .order('tier', { ascending: true });
       
       if (error) throw error;
@@ -52,7 +52,7 @@ export default function BadgesPage() {
         .single();
       
       if (error && error.code !== 'PGRST116') throw error;
-      return data || { current_streak: 0, longest_streak: 0 };
+      return data || { current_daily_streak: 0, longest_daily_streak: 0 };
     }
   });
 
@@ -67,7 +67,7 @@ export default function BadgesPage() {
         .single();
       
       if (error && error.code !== 'PGRST116') throw error;
-      return data || { total_items_saved: 0 };
+      return data || { total_links_saved: 0 };
     }
   });
 
@@ -82,7 +82,7 @@ export default function BadgesPage() {
         .single();
       
       if (error && error.code !== 'PGRST116') throw error;
-      return data || { total_saves: 0, morning_saves: 0, afternoon_saves: 0, night_saves: 0 };
+      return data || { total_saves_30d: 0, morning_saves_30d: 0, afternoon_saves_30d: 0, night_saves_30d: 0 };
     }
   });
 
@@ -96,7 +96,12 @@ export default function BadgesPage() {
       </div>
 
       {isLoading ? (
-        <div className="loading-state">Loading your achievements...</div>
+        <div className="loading-state">
+          <div className="loading-text">Loading your stats...</div>
+          <div className="loading-bar">
+            <div className="loading-bar-fill"></div>
+          </div>
+        </div>
       ) : (
         <>
           {/* Progress Section */}
