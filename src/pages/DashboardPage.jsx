@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useAuth } from '../contexts/AuthContext';
 import { folderService } from '../services/folderService';
 import Layout from '../components/layout/Layout';
 import toast from 'react-hot-toast';
@@ -8,7 +7,7 @@ import { FiPlus, FiFolder } from 'react-icons/fi';
 import './DashboardPage.css';
 
 const DashboardPage = () => {
-  const { user } = useAuth();
+  const user = { id: 'demo-user' }; // Demo user for testing without auth
   const queryClient = useQueryClient();
   const [showFolderForm, setShowFolderForm] = useState(false);
   const [folderData, setFolderData] = useState({
@@ -20,9 +19,8 @@ const DashboardPage = () => {
 
   // Fetch folders
   const { data: folders, isLoading } = useQuery({
-    queryKey: ['folders', user?.id],
-    queryFn: () => folderService.getFolders(user.id),
-    enabled: !!user
+    queryKey: ['folders', user.id],
+    queryFn: () => folderService.getFolders(user.id)
   });
 
   // Create folder mutation
