@@ -3,6 +3,18 @@
 -- Complete database setup with badge system
 -- ============================================
 
+-- Drop existing tables (in correct order due to foreign key constraints)
+DROP TABLE IF EXISTS user_scholar_stats CASCADE;
+DROP TABLE IF EXISTS user_milestone_stats CASCADE;
+DROP TABLE IF EXISTS user_streak_stats CASCADE;
+DROP TABLE IF EXISTS user_activity_log CASCADE;
+DROP TABLE IF EXISTS user_badges CASCADE;
+DROP TABLE IF EXISTS badge_definitions CASCADE;
+DROP TABLE IF EXISTS notes CASCADE;
+DROP TABLE IF EXISTS items CASCADE;
+DROP TABLE IF EXISTS folders CASCADE;
+DROP TABLE IF EXISTS profiles CASCADE;
+
 -- Enable UUID extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
