@@ -110,3 +110,10 @@ export const folderService = {
     }
   }
 };
+
+// Export standalone functions for easier imports
+export const getFolders = (userId) => folderService.getFolders(userId);
+export const getFolder = (folderId) => folderService.getFolder(folderId);
+export const createFolder = (userId, folderData) => folderService.createFolder(userId, folderData);
+export const updateFolder = (folderId, updates) => folderService.updateFolder(folderId, updates);
+export const deleteFolder = (folderId) => folderService.deleteFolder(folderId);
