@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createItem } from '../../services/itemService';
 import { logActivity } from '../../services/activityService';
+import { checkAndAwardBadges } from '../../services/badgeService';
 import { supabase } from '../../services/supabase';
+import BadgeNotification from '../badges/BadgeNotification';
 import toast from 'react-hot-toast';
 import { FiX, FiLink, FiFileText, FiUpload } from 'react-icons/fi';
 import '../../styles/AddItemModal.css';
@@ -27,6 +29,7 @@ export default function AddItemModal({ folderId, userId, onClose }) {
     thumbnail_url: ''
   });
   const [uploadingFile, setUploadingFile] = useState(false);
+  const [newBadge, setNewBadge] = useState(null);
 
   const createItemMutation = useMutation({
     mutationFn: async (data) => {
@@ -45,6 +48,12 @@ export default function AddItemModal({ folderId, userId, onClose }) {
         item_id: item.id,
         folder_id: folderId
       });
+
+      // Check and award badges
+      const badges = await checkAndAwardBadges(userId);
+      if (badges && badges.length > 0) {
+        setNewBadge(badges[0].badge);
+      }
 
       // Create note if provided
       if (data.note_content?.trim()) {
@@ -131,7 +140,14 @@ export default function AddItemModal({ folderId, userId, onClose }) {
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <>
+      {newBadge && (
+        <BadgeNotification 
+          badge={newBadge} 
+          onClose={() => setNewBadge(null)} 
+        />
+      )}
+      <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content add-item-modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h2>Add New Item</h2>
@@ -263,5 +279,6 @@ export default function AddItemModal({ folderId, userId, onClose }) {
         </form>
       </div>
     </div>
+    </>
   );
 }

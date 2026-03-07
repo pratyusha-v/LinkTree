@@ -457,5 +457,36 @@ export const badgeService = {
     const [year1, m1] = month1.split('-').map(Number);
     const [year2, m2] = month2.split('-').map(Number);
     return (year2 - year1) * 12 + (m2 - m1);
+  },
+
+  /**
+   * Check and award all eligible badges for a user
+   * Call this after a user saves an item
+   */
+  async checkAndAwardBadges(userId) {
+    try {
+      const newBadges = [];
+
+      // Run all badge checks
+      const [streakBadges, milestoneBadges, scholarBadges] = await Promise.all([
+        this.calculateStreakBadges(userId),
+        this.calculateMilestoneBadges(userId),
+        this.calculateScholarBadges(userId)
+      ]);
+
+      newBadges.push(...streakBadges, ...milestoneBadges, ...scholarBadges);
+
+      return newBadges;
+    } catch (error) {
+      console.error('Error checking and awarding badges:', error);
+      return [];
+    }
   }
 };
+
+// Standalone exports for convenience
+export const checkAndAwardBadges = (userId) => badgeService.checkAndAwardBadges(userId);
+export const calculateStreakBadges = (userId) => badgeService.calculateStreakBadges(userId);
+export const calculateMilestoneBadges = (userId) => badgeService.calculateMilestoneBadges(userId);
+export const calculateScholarBadges = (userId) => badgeService.calculateScholarBadges(userId);
+

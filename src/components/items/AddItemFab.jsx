@@ -3,7 +3,9 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getFolders, createFolder } from '../../services/folderService';
 import { createItem } from '../../services/itemService';
 import { logActivity } from '../../services/activityService';
+import { checkAndAwardBadges } from '../../services/badgeService';
 import { supabase } from '../../services/supabase';
+import BadgeNotification from '../badges/BadgeNotification';
 import toast from 'react-hot-toast';
 import { FiPlus, FiX, FiLink, FiFileText, FiUpload, FiFolder } from 'react-icons/fi';
 import '../../styles/AddItemFab.css';
@@ -22,6 +24,7 @@ export default function AddItemFab({ userId }) {
   const [showModal, setShowModal] = useState(false);
   const [showNewFolder, setShowNewFolder] = useState(false);
   const [uploadingFile, setUploadingFile] = useState(false);
+  const [newBadge, setNewBadge] = useState(null);
   
   const [formData, setFormData] = useState({
     title: '',
@@ -77,6 +80,12 @@ export default function AddItemFab({ userId }) {
         item_id: item.id,
         folder_id: folderId
       });
+
+      // Check and award badges
+      const badges = await checkAndAwardBadges(userId);
+      if (badges && badges.length > 0) {
+        setNewBadge(badges[0].badge);
+      }
 
       // Create note if provided
       if (data.note_content?.trim()) {
@@ -179,6 +188,12 @@ export default function AddItemFab({ userId }) {
 
   return (
     <>
+      {newBadge && (
+        <BadgeNotification 
+          badge={newBadge} 
+          onClose={() => setNewBadge(null)} 
+        />
+      )}
       <button className="add-fab" onClick={() => setShowModal(true)} title="Add new item">
         <FiPlus size={24} />
       </button>
