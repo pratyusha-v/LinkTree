@@ -3,9 +3,9 @@ import { FiLock } from 'react-icons/fi';
 import '../../styles/BadgeCollection.css';
 
 const BADGE_ICONS = {
-  streak: '🔥',
-  milestone: '🎯',
-  scholar: '📚'
+  streak: 'https://img.icons8.com/fluency/96/fire-element.png',
+  milestone: 'https://img.icons8.com/fluency/96/trophy.png',
+  scholar: 'https://img.icons8.com/fluency/96/graduation-cap.png'
 };
 
 export default function BadgeCollection({ userBadges = [], allBadges = [] }) {
@@ -19,7 +19,9 @@ export default function BadgeCollection({ userBadges = [], allBadges = [] }) {
     return acc;
   }, {}) || {};
 
-  const getBadgeIcon = (type) => BADGE_ICONS[type] || '🏆';
+  const getBadgeIcon = (badge) => {
+    return badge.icon || BADGE_ICONS[badge.category] || 'https://img.icons8.com/fluency/96/trophy.png';
+  };
 
   const getBadgeStatus = (badgeId) => {
     return earnedBadgeIds.has(badgeId);
@@ -30,7 +32,7 @@ export default function BadgeCollection({ userBadges = [], allBadges = [] }) {
       {Object.entries(groupedBadges).map(([type, badges]) => (
         <div key={type} className="badge-category">
           <h3 className="category-title">
-            <span className="category-icon">{getBadgeIcon(type)}</span>
+            <img src={BADGE_ICONS[type]} alt={type} className="category-icon-img" />
             {type.charAt(0).toUpperCase() + type.slice(1)} Badges
           </h3>
           
@@ -50,7 +52,7 @@ export default function BadgeCollection({ userBadges = [], allBadges = [] }) {
                 >
                   <div className="badge-visual">
                     {isEarned ? (
-                      <span className="badge-emoji">{getBadgeIcon(badge.category)}</span>
+                      <img src={getBadgeIcon(badge)} alt={badge.name} className="badge-icon-img" />
                     ) : (
                       <div className="badge-locked">
                         <FiLock size={32} />

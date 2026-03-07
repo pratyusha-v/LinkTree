@@ -297,6 +297,13 @@
   flex-shrink: 0;
 }
 
+.recent-badge-icon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
 .recent-badge-card .badge-info {
   flex: 1;
 }

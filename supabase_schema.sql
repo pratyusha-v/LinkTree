@@ -229,27 +229,27 @@ CREATE POLICY "Allow all on user_scholar_stats" ON user_scholar_stats FOR ALL US
 -- SEED DATA: Badge Definitions
 -- ============================================
 
-INSERT INTO badge_definitions (id, name, description, category, tier, criteria, points, rarity, display_order) VALUES
+INSERT INTO badge_definitions (id, name, description, category, tier, icon, criteria, points, rarity, display_order) VALUES
 -- Streak badges
-('streak_daily_7', '7-Day Streak', 'Save links for 7 consecutive days', 'streak', 'bronze', '{"type":"daily_streak","days":7}', 50, 'common', 10),
-('streak_daily_30', '30-Day Streak', 'Save links for 30 consecutive days', 'streak', 'gold', '{"type":"daily_streak","days":30}', 300, 'epic', 11),
-('streak_daily_100', '100-Day Streak', 'Save links for 100 consecutive days', 'streak', 'platinum', '{"type":"daily_streak","days":100}', 1000, 'legendary', 12),
-('streak_weekly_4', '4-Week Streak', 'Save links for 4 consecutive weeks', 'streak', 'silver', '{"type":"weekly_streak","weeks":4}', 150, 'rare', 20),
-('streak_weekly_12', '12-Week Streak', 'Save links for 12 consecutive weeks', 'streak', 'gold', '{"type":"weekly_streak","weeks":12}', 400, 'epic', 21),
-('streak_monthly_3', '3-Month Streak', 'Save links for 3 consecutive months', 'streak', 'silver', '{"type":"monthly_streak","months":3}', 200, 'rare', 30),
-('streak_monthly_6', '6-Month Streak', 'Save links for 6 consecutive months', 'streak', 'gold', '{"type":"monthly_streak","months":6}', 500, 'epic', 31),
+('streak_daily_7', '7-Day Streak', 'Save links for 7 consecutive days', 'streak', 'bronze', 'https://img.icons8.com/fluency/96/fire-element.png', '{"type":"daily_streak","days":7}', 50, 'common', 10),
+('streak_daily_30', '30-Day Streak', 'Save links for 30 consecutive days', 'streak', 'gold', 'https://img.icons8.com/fluency/96/fire-element.png', '{"type":"daily_streak","days":30}', 300, 'epic', 11),
+('streak_daily_100', '100-Day Streak', 'Save links for 100 consecutive days', 'streak', 'platinum', 'https://img.icons8.com/fluency/96/fire-element.png', '{"type":"daily_streak","days":100}', 1000, 'legendary', 12),
+('streak_weekly_4', '4-Week Streak', 'Save links for 4 consecutive weeks', 'streak', 'silver', 'https://img.icons8.com/fluency/96/calendar.png', '{"type":"weekly_streak","weeks":4}', 150, 'rare', 20),
+('streak_weekly_12', '12-Week Streak', 'Save links for 12 consecutive weeks', 'streak', 'gold', 'https://img.icons8.com/fluency/96/calendar.png', '{"type":"weekly_streak","weeks":12}', 400, 'epic', 21),
+('streak_monthly_3', '3-Month Streak', 'Save links for 3 consecutive months', 'streak', 'silver', 'https://img.icons8.com/fluency/96/planner.png', '{"type":"monthly_streak","months":3}', 200, 'rare', 30),
+('streak_monthly_6', '6-Month Streak', 'Save links for 6 consecutive months', 'streak', 'gold', 'https://img.icons8.com/fluency/96/planner.png', '{"type":"monthly_streak","months":6}', 500, 'epic', 31),
 
 -- Milestone badges
-('milestone_1', 'First Link', 'Save your first link', 'milestone', 'bronze', '{"type":"milestone","count":1}', 10, 'common', 40),
-('milestone_10', 'Collector', 'Save 10 links', 'milestone', 'bronze', '{"type":"milestone","count":10}', 50, 'common', 41),
-('milestone_50', 'Curator', 'Save 50 links', 'milestone', 'silver', '{"type":"milestone","count":50}', 250, 'rare', 42),
-('milestone_100', 'Archivist', 'Save 100 links', 'milestone', 'gold', '{"type":"milestone","count":100}', 500, 'epic', 43),
-('milestone_250', 'Master Collector', 'Save 250 links', 'milestone', 'platinum', '{"type":"milestone","count":250}', 1000, 'legendary', 44),
+('milestone_1', 'First Link', 'Save your first link', 'milestone', 'bronze', 'https://img.icons8.com/fluency/96/star.png', '{"type":"milestone","count":1}', 10, 'common', 40),
+('milestone_10', 'Collector', 'Save 10 links', 'milestone', 'bronze', 'https://img.icons8.com/fluency/96/trophy.png', '{"type":"milestone","count":10}', 50, 'common', 41),
+('milestone_50', 'Curator', 'Save 50 links', 'milestone', 'silver', 'https://img.icons8.com/fluency/96/prize.png', '{"type":"milestone","count":50}', 250, 'rare', 42),
+('milestone_100', 'Archivist', 'Save 100 links', 'milestone', 'gold', 'https://img.icons8.com/fluency/96/medal.png', '{"type":"milestone","count":100}', 500, 'epic', 43),
+('milestone_250', 'Master Collector', 'Save 250 links', 'milestone', 'platinum', 'https://img.icons8.com/fluency/96/crown.png', '{"type":"milestone","count":250}', 1000, 'legendary', 44),
 
 -- Scholar badges
-('morning_scholar', 'Morning Scholar', 'Most active in mornings (4am-11:59am) - requires 10+ saves in 30 days with 40%+ share', 'scholar', 'gold', '{"type":"scholar","time_bucket":"morning","min_saves":10,"min_share":0.40}', 300, 'epic', 50),
-('afternoon_scholar', 'Afternoon Scholar', 'Most active in afternoons (12pm-7:59pm) - requires 10+ saves in 30 days with 40%+ share', 'scholar', 'gold', '{"type":"scholar","time_bucket":"afternoon","min_saves":10,"min_share":0.40}', 300, 'epic', 51),
-('night_scholar', 'Night Scholar', 'Most active at night (8pm-3:59am) - requires 10+ saves in 30 days with 40%+ share', 'scholar', 'gold', '{"type":"scholar","time_bucket":"night","min_saves":10,"min_share":0.40}', 300, 'epic', 52);
+('morning_scholar', 'Morning Scholar', 'Most active in mornings', 'scholar', 'gold', 'https://img.icons8.com/fluency/96/sunrise.png', '{"type":"scholar","time_bucket":"morning","min_saves":10,"min_share":0.40}', 300, 'epic', 50),
+('afternoon_scholar', 'Afternoon Scholar', 'Most active in afternoons', 'scholar', 'gold', 'https://img.icons8.com/fluency/96/sun.png', '{"type":"scholar","time_bucket":"afternoon","min_saves":10,"min_share":0.40}', 300, 'epic', 51),
+('night_scholar', 'Night Scholar', 'Most active at night', 'scholar', 'gold', 'https://img.icons8.com/fluency/96/moon-and-stars.png', '{"type":"scholar","time_bucket":"night","min_saves":10,"min_share":0.40}', 300, 'epic', 52);
 
 -- ============================================
 -- FUNCTIONS AND TRIGGERS

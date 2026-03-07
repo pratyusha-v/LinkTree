@@ -136,7 +136,11 @@ const DashboardPage = ({ showCreateFolder, setShowCreateFolder }) => {
           <div className="recent-badges-grid">
             {recentBadges.map((userBadge) => (
               <div key={userBadge.id} className="recent-badge-card">
-                <div className="badge-icon">{userBadge.badge_definitions.icon}</div>
+                <img 
+                  src={userBadge.badge_definitions.icon} 
+                  alt={userBadge.badge_definitions.name}
+                  className="recent-badge-icon"
+                />
                 <div className="badge-info">
                   <h3>{userBadge.badge_definitions.name}</h3>
                   <p>{userBadge.badge_definitions.description}</p>
