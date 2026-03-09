@@ -16,7 +16,7 @@ export default function ItemList({ items, notes, isLoading, onItemClick, onEdit,
       <div className="items-empty">
         <div className="empty-tree-image">
           <img 
-            src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/128/external-tree-nature-flaticons-lineal-color-flat-icons-3.png" 
+            src="https://img.icons8.com/fluency/128/tree.png" 
             alt="Empty folder"
           />
         </div>
