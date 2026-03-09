@@ -88,7 +88,7 @@ const DashboardPage = ({ showCreateFolder, setShowCreateFolder }) => {
     <div className="dashboard-welcome">
       <div className="welcome-header">
         <div className="welcome-content">
-          <h1 className="welcome-title" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <h1 className="welcome-title" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem' }}>
             <svg width="40" height="40" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="16" cy="8" r="4" fill="#10b981"/>
               <circle cx="10" cy="14" r="3" fill="#10b981"/>
