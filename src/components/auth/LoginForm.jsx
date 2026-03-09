@@ -37,7 +37,24 @@ const LoginForm = () => {
     <div className="auth-container">
       <div className="auth-card">
         <div className="auth-header">
-          <h1>Welcome to LinkTree</h1>
+          <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', justifyContent: 'center' }}>
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="16" cy="8" r="4" fill="#10b981"/>
+              <circle cx="10" cy="14" r="3" fill="#10b981"/>
+              <circle cx="22" cy="14" r="3" fill="#10b981"/>
+              <circle cx="7" cy="20" r="2.5" fill="#10b981"/>
+              <circle cx="16" cy="20" r="2.5" fill="#10b981"/>
+              <circle cx="25" cy="20" r="2.5" fill="#10b981"/>
+              <line x1="16" y1="12" x2="16" y2="26" stroke="#8b5cf6" strokeWidth="2" strokeLinecap="round"/>
+              <line x1="16" y1="14" x2="10" y2="14" stroke="#8b5cf6" strokeWidth="1.5"/>
+              <line x1="16" y1="14" x2="22" y2="14" stroke="#8b5cf6" strokeWidth="1.5"/>
+              <line x1="10" y1="17" x2="7" y2="20" stroke="#8b5cf6" strokeWidth="1.5"/>
+              <line x1="16" y1="17" x2="16" y2="20" stroke="#8b5cf6" strokeWidth="1.5"/>
+              <line x1="22" y1="17" x2="25" y2="20" stroke="#8b5cf6" strokeWidth="1.5"/>
+              <rect x="14" y="26" width="4" height="4" rx="1" fill="#92400e"/>
+            </svg>
+            Welcome to LinkTree
+          </h1>
           <p className="text-secondary">Sign in to your knowledge library</p>
         </div>
 

@@ -25,20 +25,20 @@ export default function Sidebar({ folders, onCreateFolder, isLoading }) {
       <aside className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
         <div className="sidebar-header">
           <h1 className="sidebar-logo">
-            <svg width="32" height="32" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="logo-tree">
-              <circle cx="60" cy="35" r="12" fill="#10b981"/>
-              <circle cx="40" cy="55" r="10" fill="#10b981"/>
-              <circle cx="80" cy="55" r="10" fill="#10b981"/>
-              <circle cx="30" cy="75" r="8" fill="#10b981"/>
-              <circle cx="60" cy="75" r="8" fill="#10b981"/>
-              <circle cx="90" cy="75" r="8" fill="#10b981"/>
-              <line x1="60" y1="47" x2="60" y2="90" stroke="#8b5cf6" strokeWidth="4" strokeLinecap="round"/>
-              <line x1="60" y1="55" x2="40" y2="55" stroke="#8b5cf6" strokeWidth="3"/>
-              <line x1="60" y1="55" x2="80" y2="55" stroke="#8b5cf6" strokeWidth="3"/>
-              <line x1="40" y1="65" x2="30" y2="75" stroke="#8b5cf6" strokeWidth="2"/>
-              <line x1="60" y1="65" x2="60" y2="75" stroke="#8b5cf6" strokeWidth="2"/>
-              <line x1="80" y1="65" x2="90" y2="75" stroke="#8b5cf6" strokeWidth="2"/>
-              <rect x="55" y="90" width="10" height="15" rx="2" fill="#92400e"/>
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="logo-tree">
+              <circle cx="16" cy="8" r="4" fill="#10b981"/>
+              <circle cx="10" cy="14" r="3" fill="#10b981"/>
+              <circle cx="22" cy="14" r="3" fill="#10b981"/>
+              <circle cx="7" cy="20" r="2.5" fill="#10b981"/>
+              <circle cx="16" cy="20" r="2.5" fill="#10b981"/>
+              <circle cx="25" cy="20" r="2.5" fill="#10b981"/>
+              <line x1="16" y1="12" x2="16" y2="26" stroke="#8b5cf6" strokeWidth="2" strokeLinecap="round"/>
+              <line x1="16" y1="14" x2="10" y2="14" stroke="#8b5cf6" strokeWidth="1.5"/>
+              <line x1="16" y1="14" x2="22" y2="14" stroke="#8b5cf6" strokeWidth="1.5"/>
+              <line x1="10" y1="17" x2="7" y2="20" stroke="#8b5cf6" strokeWidth="1.5"/>
+              <line x1="16" y1="17" x2="16" y2="20" stroke="#8b5cf6" strokeWidth="1.5"/>
+              <line x1="22" y1="17" x2="25" y2="20" stroke="#8b5cf6" strokeWidth="1.5"/>
+              <rect x="14" y="26" width="4" height="4" rx="1" fill="#92400e"/>
             </svg>
             LinkTree
           </h1>
