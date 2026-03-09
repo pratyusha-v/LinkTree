@@ -134,6 +134,7 @@ export default function FolderDetailPage() {
         onItemClick={(item) => setViewingItem(item)}
         onEdit={(item) => setEditingItem(item)}
         onDelete={(item) => setDeletingItem(item)}
+        onAddClick={() => setShowAddModal(true)}
       />
 
       {showAddModal && (
