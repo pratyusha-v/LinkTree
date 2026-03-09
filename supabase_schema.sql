@@ -249,7 +249,7 @@ INSERT INTO badge_definitions (id, name, description, category, tier, icon, crit
 -- Scholar badges
 ('morning_scholar', 'Morning Scholar', 'Most active in mornings', 'scholar', 'gold', 'https://img.icons8.com/fluency/96/sunrise.png', '{"type":"scholar","time_bucket":"morning","min_saves":10,"min_share":0.40}', 300, 'epic', 50),
 ('afternoon_scholar', 'Afternoon Scholar', 'Most active in afternoons', 'scholar', 'gold', 'https://img.icons8.com/fluency/96/sun.png', '{"type":"scholar","time_bucket":"afternoon","min_saves":10,"min_share":0.40}', 300, 'epic', 51),
-('night_scholar', 'Night Scholar', 'Most active at night', 'scholar', 'gold', 'https://img.icons8.com/fluency/96/moon-and-stars.png', '{"type":"scholar","time_bucket":"night","min_saves":10,"min_share":0.40}', 300, 'epic', 52);
+('night_scholar', 'Night Scholar', 'Most active at night', 'scholar', 'gold', 'https://img.icons8.com/fluency/96/crescent-moon.png', '{"type":"scholar","time_bucket":"night","min_saves":10,"min_share":0.40}', 300, 'epic', 52);
 
 -- ============================================
 -- FUNCTIONS AND TRIGGERS
