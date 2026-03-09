@@ -47,10 +47,10 @@
   margin-bottom: 1.5rem;
 }
 
-.empty-tree-image img {
+.empty-tree-image svg {
   width: 120px;
   height: 120px;
-  opacity: 0.8;
+  opacity: 0.9;
   animation: gentle-float 3s ease-in-out infinite;
 }
 
