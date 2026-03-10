@@ -101,6 +101,19 @@
   font-size: 0.875rem;
   margin-top: 0.5rem;
   text-align: center;
+  padding: 0.75rem;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  line-height: 1.5;
+}
+
+.search-tip {
+  color: #6b7280;
+  font-size: 0.8125rem;
+  margin-top: 0.5rem;
+  text-align: center;
+  font-style: italic;
 }
 
 .results-container {
@@ -291,6 +304,16 @@
   padding: 2rem;
   color: #6b7280;
   font-style: italic;
+}
+
+.no-results a {
+  color: #3b82f6;
+  text-decoration: underline;
+  font-style: normal;
+}
+
+.no-results a:hover {
+  color: #2563eb;
 }
 
 @media (max-width: 768px) {

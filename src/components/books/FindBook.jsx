@@ -71,14 +71,17 @@ export default function FindBook() {
       const { lat, lon, display_name } = geoData[0];
 
       // Search for libraries and bookstores using Overpass API
-      const radius = 5000; // 5km radius
+      // Try 10km radius first (about 6 miles)
+      let radius = 10000;
       const overpassQuery = `
-        [out:json];
+        [out:json][timeout:25];
         (
           node["amenity"="library"](around:${radius},${lat},${lon});
           way["amenity"="library"](around:${radius},${lat},${lon});
+          relation["amenity"="library"](around:${radius},${lat},${lon});
           node["shop"="books"](around:${radius},${lat},${lon});
           way["shop"="books"](around:${radius},${lat},${lon});
+          relation["shop"="books"](around:${radius},${lat},${lon});
         );
         out body;
         >;
@@ -93,7 +96,14 @@ export default function FindBook() {
         }
       );
 
+      if (!overpassResponse.ok) {
+        throw new Error('Failed to search locations. Please try again.');
+      }
+
       const overpassData = await overpassResponse.json();
+      
+      console.log('Overpass API response:', overpassData); // Debug logging
+      console.log('Total elements found:', overpassData.elements?.length || 0);
       
       // Process results
       const libraries = [];
@@ -148,10 +158,24 @@ export default function FindBook() {
         }
       });
 
+      console.log('Processed libraries:', libraries.length);
+      console.log('Processed bookstores:', bookstores.length);
+
+      // Check if we have any results at all
+      if (libraries.length === 0 && bookstores.length === 0) {
+        setError(
+          `No libraries or bookstores found within 6 miles of zipcode ${zipcode}. ` +
+          'This area may not have locations mapped in OpenStreetMap yet, or try a nearby zipcode.'
+        );
+        setLoading(false);
+        return;
+      }
+
       setResults({
-        libraries: libraries.slice(0, 5),
-        bookstores: bookstores.slice(0, 5),
+        libraries: libraries.slice(0, 8),
+        bookstores: bookstores.slice(0, 8),
         zipcode,
+        totalFound: libraries.length + bookstores.length,
       });
       setMapCenter([parseFloat(lat), parseFloat(lon)]);
     } catch (err) {
@@ -198,13 +222,21 @@ export default function FindBook() {
           </button>
         </div>
         {error && <p className="error-message">{error}</p>}
+        {!error && !results && (
+          <p className="search-tip">
+            💡 Searches within 6 miles. Results based on OpenStreetMap data.
+          </p>
+        )}
       </form>
 
       {results && mapCenter && (
         <div className="results-container">
           <div className="results-header">
             <FiMapPin size={18} />
-            <span>Results for {results.zipcode}</span>
+            <span>
+              Results for {results.zipcode} - Found {results.totalFound} location
+              {results.totalFound !== 1 ? 's' : ''} within 6 miles
+            </span>
           </div>
 
           {/* Map View */}
@@ -282,7 +314,10 @@ export default function FindBook() {
                 <h3>Libraries ({results.libraries.length})</h3>
               </div>
               {results.libraries.length === 0 ? (
-                <p className="no-results">No libraries found nearby</p>
+                <p className="no-results">
+                  No libraries found within 6 miles. Try a different zipcode or check{' '}
+                  <a href="https://www.publiclibraries.com/" target="_blank" rel="noopener noreferrer">PublicLibraries.com</a>
+                </p>
               ) : (
                 <div className="location-list">
                   {results.libraries.map((lib) => (
@@ -332,7 +367,10 @@ export default function FindBook() {
                 <h3>Bookstores ({results.bookstores.length})</h3>
               </div>
               {results.bookstores.length === 0 ? (
-                <p className="no-results">No bookstores found nearby</p>
+                <p className="no-results">
+                  No bookstores found within 6 miles. Try searching on{' '}
+                  <a href="https://www.bookstore.org/" target="_blank" rel="noopener noreferrer">Bookstore.org</a>
+                </p>
               ) : (
                 <div className="location-list">
                   {results.bookstores.map((store) => (

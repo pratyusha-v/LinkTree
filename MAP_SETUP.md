@@ -32,11 +32,12 @@ pnpm add leaflet react-leaflet
 ## Features
 
 ### Interactive Map
-- Shows the searched area with a 5km radius
+- Shows the searched area with a 10km (6 mile) radius
 - Classic colored pin markers for libraries (blue) and bookstores (red)
 - Click markers to see popup with location details
 - Zoom and pan controls
 - OpenStreetMap tile layer (no API key needed!)
+- Console logging for debugging results
 
 ### Hover Interactions
 - Hover over a map marker → corresponding location card highlights in blue

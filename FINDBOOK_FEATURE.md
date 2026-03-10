@@ -25,10 +25,11 @@ See [MAP_SETUP.md](MAP_SETUP.md) for detailed setup instructions.
 
 ### 2. Location Search
 - Uses **Overpass API** (OpenStreetMap) to find nearby places
-- Searches within 5km radius (approximately 3 miles)
+- Searches within 10km radius (approximately 6 miles)
 - Finds:
   - Libraries (amenity=library)
   - Bookstores (shop=books)
+- Includes timeout handling and error recovery
 
 ### 3. Interactive Map Display
 - Uses **Leaflet** (free, open-source mapping library)
@@ -40,12 +41,14 @@ See [MAP_SETUP.md](MAP_SETUP.md) for detailed setup instructions.
 - Zoom and pan controls
 
 ### 4. Results Display
-- Shows up to 5 libraries and 5 bookstores
+- Shows up to 8 libraries and 8 bookstores
+- Displays total count of locations found
 - Includes:
   - Name and address
   - Phone number (if available)
   - Website link (if available)
   - Google Maps directions link
+- Helpful links when no results found
 
 ### 5. Hover Interactions
 - Hover over map marker → corresponding card highlights in blue
