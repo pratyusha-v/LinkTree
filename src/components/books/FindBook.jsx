@@ -13,19 +13,25 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
 });
 
-// Custom icons for libraries and bookstores
+// Custom colored pins for libraries (blue) and bookstores (red)
 const libraryIcon = new L.Icon({
-  iconUrl: 'https://img.icons8.com/fluency/48/visited.png',
-  iconSize: [38, 38],
-  iconAnchor: [19, 38],
-  popupAnchor: [0, -38],
+  iconRetinaUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
 });
 
 const bookstoreIcon = new L.Icon({
-  iconUrl: 'https://img.icons8.com/fluency/48/shop.png',
-  iconSize: [38, 38],
-  iconAnchor: [19, 38],
-  popupAnchor: [0, -38],
+  iconRetinaUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
 });
 
 export default function FindBook() {
@@ -258,11 +264,11 @@ export default function FindBook() {
             </MapContainer>
             <div className="map-legend">
               <div className="legend-item">
-                <img src="https://img.icons8.com/fluency/24/visited.png" alt="Library" />
+                <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png" alt="Library" className="legend-pin" />
                 <span>Library</span>
               </div>
               <div className="legend-item">
-                <img src="https://img.icons8.com/fluency/24/shop.png" alt="Bookstore" />
+                <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png" alt="Bookstore" className="legend-pin" />
                 <span>Bookstore</span>
               </div>
             </div>

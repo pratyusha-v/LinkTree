@@ -148,8 +148,14 @@
 }
 
 .legend-item img {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 33px;
+}
+
+.legend-item .legend-pin {
+  width: 20px;
+  height: 33px;
+  object-fit: contain;
 }
 
 .map-popup {
@@ -306,8 +312,9 @@
     padding: 0.5rem;
   }
 
-  .legend-item img {
-    width: 20px;
-    height: 20px;
+  .legend-item img,
+  .legend-item .legend-pin {
+    width: 16px;
+    height: 26px;
   }
 }

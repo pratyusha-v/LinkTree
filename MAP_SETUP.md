@@ -33,7 +33,7 @@ pnpm add leaflet react-leaflet
 
 ### Interactive Map
 - Shows the searched area with a 5km radius
-- Custom markers for libraries (📍 pin icon) and bookstores (🏪 shop icon)
+- Classic colored pin markers for libraries (blue) and bookstores (red)
 - Click markers to see popup with location details
 - Zoom and pan controls
 - OpenStreetMap tile layer (no API key needed!)
@@ -44,7 +44,9 @@ pnpm add leaflet react-leaflet
 - Smooth transitions and visual feedback
 
 ### Map Legend
-- Top-right corner shows which icon represents libraries vs bookstores
+- Top-right corner shows which pin color represents libraries vs bookstores
+- Blue pins = Libraries
+- Red pins = Bookstores
 - Responsive design for mobile
 
 ## Usage

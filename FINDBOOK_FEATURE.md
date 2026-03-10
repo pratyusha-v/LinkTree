@@ -32,11 +32,11 @@ See [MAP_SETUP.md](MAP_SETUP.md) for detailed setup instructions.
 
 ### 3. Interactive Map Display
 - Uses **Leaflet** (free, open-source mapping library)
-- Shows search area with custom markers:
-  - 📍 Purple pin for libraries
-  - 🏪 Orange shop for bookstores
+- Shows search area with classic colored pin markers:
+  - 📍 Blue pin for libraries
+  - 📍 Red pin for bookstores
 - Click markers for popup details
-- Map legend shows icon meanings
+- Map legend shows pin colors
 - Zoom and pan controls
 
 ### 4. Results Display
