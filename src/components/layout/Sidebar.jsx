@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { FiMenu, FiX, FiPlus, FiHome, FiSearch, FiAward, FiChevronDown, FiChevronUp } from 'react-icons/fi';
+import { FiMenu, FiX, FiPlus, FiHome, FiSearch, FiAward, FiBook, FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import '../../styles/Sidebar.css';
 
 export default function Sidebar({ folders, onCreateFolder, isLoading }) {
@@ -57,6 +57,10 @@ export default function Sidebar({ folders, onCreateFolder, isLoading }) {
           <Link to="/badges" className="nav-item">
             <FiAward size={18} />
             <span>Stats & Badges</span>
+          </Link>
+          <Link to="/find-book" className="nav-item">
+            <FiBook size={18} />
+            <span>Find a Book</span>
           </Link>
         </nav>
 

@@ -7,6 +7,7 @@ import DashboardPage from './pages/DashboardPage';
 import FolderDetailPage from './pages/FolderDetailPage';
 import BadgesPage from './pages/BadgesPage';
 import SearchPage from './pages/SearchPage';
+import FindBookPage from './pages/FindBookPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -32,6 +33,7 @@ function App() {
             <Route path="/folder/:folderId" element={<FolderDetailPage />} />
             <Route path="/badges" element={<BadgesPage />} />
             <Route path="/search" element={<SearchPage />} />
+            <Route path="/find-book" element={<FindBookPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Layout>

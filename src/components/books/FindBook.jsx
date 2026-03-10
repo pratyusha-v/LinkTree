@@ -34,7 +34,7 @@ export default function FindBook() {
         return;
       }
 
-      const { lat, lon } = geoData[0];
+      const { lat, lon, display_name } = geoData[0];
 
       // Search for libraries and bookstores using Overpass API
       const radius = 5000; // 5km radius
@@ -47,6 +47,8 @@ export default function FindBook() {
           way["shop"="books"](around:${radius},${lat},${lon});
         );
         out body;
+        >;
+        out skel qt;
       `;
 
       const overpassResponse = await fetch(
@@ -64,25 +66,45 @@ export default function FindBook() {
       const bookstores = [];
 
       overpassData.elements.forEach((element) => {
-        const name = element.tags?.name || 'Unnamed location';
-        const address = [
-          element.tags?.['addr:housenumber'],
-          element.tags?.['addr:street'],
-          element.tags?.['addr:city'],
-          element.tags?.['addr:state'],
-          element.tags?.['addr:postcode'],
-        ]
-          .filter(Boolean)
-          .join(' ');
+        // Skip if no name and no tags (like nodes that are part of ways)
+        if (!element.tags || (!element.tags.name && !element.tags.amenity && !element.tags.shop)) {
+          return;
+        }
+
+        const name = element.tags?.name || element.tags?.brand || 'Unnamed location';
+        
+        // Build address from various fields
+        const addressParts = [];
+        if (element.tags?.['addr:housenumber'] || element.tags?.['addr:street']) {
+          const street = [element.tags?.['addr:housenumber'], element.tags?.['addr:street']]
+            .filter(Boolean)
+            .join(' ');
+          if (street) addressParts.push(street);
+        }
+        if (element.tags?.['addr:city']) addressParts.push(element.tags['addr:city']);
+        if (element.tags?.['addr:state']) addressParts.push(element.tags['addr:state']);
+        if (element.tags?.['addr:postcode']) addressParts.push(element.tags['addr:postcode']);
+        
+        // Fallback to display_name parts if no structured address
+        let address = addressParts.length > 0 ? addressParts.join(', ') : '';
+        if (!address && display_name) {
+          // Use city/state from the geocoded location as fallback
+          const locationParts = display_name.split(',').slice(0, 3).join(',');
+          address = `Near ${locationParts}`;
+        }
+        if (!address) address = 'Address not available';
 
         const location = {
           name,
-          address: address || 'Address not available',
-          lat: element.lat,
-          lon: element.lon,
+          address,
+          lat: element.lat || element.center?.lat,
+          lon: element.lon || element.center?.lon,
           phone: element.tags?.phone || element.tags?.['contact:phone'],
           website: element.tags?.website || element.tags?.['contact:website'],
         };
+
+        // Skip if no coordinates
+        if (!location.lat || !location.lon) return;
 
         if (element.tags?.amenity === 'library') {
           libraries.push(location);

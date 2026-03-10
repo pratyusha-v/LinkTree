@@ -4,7 +4,6 @@ import { folderService } from '../services/folderService';
 import { getItems } from '../services/itemService';
 import { supabase } from '../services/supabase';
 import AddItemFab from '../components/items/AddItemFab';
-import FindBook from '../components/books/FindBook';
 import toast from 'react-hot-toast';
 import { FiPlus, FiFolder, FiLink, FiAward } from 'react-icons/fi';
 import '../styles/DashboardWelcome.css';
@@ -175,9 +174,6 @@ const DashboardPage = ({ showCreateFolder, setShowCreateFolder }) => {
           </div>
         </div>
       )}
-
-      {/* Find a Book Section */}
-      <FindBook />
 
       {/* Create Folder Modal */}
       {showCreateFolder && (

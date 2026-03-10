@@ -4,8 +4,9 @@
 The "Find a Book" feature allows users to search for nearby libraries and bookstores by entering their US zipcode.
 
 ## Location
-- Appears on the homepage/dashboard under "Stats & Badges"
-- Scroll down to find the search form
+- Available in the **sidebar navigation menu** under "Stats & Badges"
+- Click "Find a Book" with the 📚 book icon
+- Opens dedicated page at `/find-book`
 
 ## How It Works
 
