@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
@@ -19,17 +19,12 @@ const queryClient = new QueryClient({
 });
 
 function App() {
-  const [showCreateFolder, setShowCreateFolder] = useState(false);
-
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
-        <Layout onCreateFolder={() => setShowCreateFolder(true)}>
+        <Layout>
           <Routes>
-            <Route 
-              path="/" 
-              element={<DashboardPage showCreateFolder={showCreateFolder} setShowCreateFolder={setShowCreateFolder} />} 
-            />
+            <Route path="/" element={<DashboardPage />} />
             <Route path="/folder/:folderId" element={<FolderDetailPage />} />
             <Route path="/badges" element={<BadgesPage />} />
             <Route path="/search" element={<SearchPage />} />
