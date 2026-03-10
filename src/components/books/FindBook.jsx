@@ -1,12 +1,40 @@
 import { useState } from 'react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
 import { FiMapPin, FiBook, FiShoppingBag, FiExternalLink, FiSearch } from 'react-icons/fi';
+import 'leaflet/dist/leaflet.css';
 import '../../styles/FindBook.css';
+
+// Fix default icon issue with Leaflet in React
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+});
+
+// Custom icons for libraries and bookstores
+const libraryIcon = new L.Icon({
+  iconUrl: 'https://img.icons8.com/fluency/48/visited.png',
+  iconSize: [38, 38],
+  iconAnchor: [19, 38],
+  popupAnchor: [0, -38],
+});
+
+const bookstoreIcon = new L.Icon({
+  iconUrl: 'https://img.icons8.com/fluency/48/shop.png',
+  iconSize: [38, 38],
+  iconAnchor: [19, 38],
+  popupAnchor: [0, -38],
+});
 
 export default function FindBook() {
   const [zipcode, setZipcode] = useState('');
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [hoveredLocation, setHoveredLocation] = useState(null);
+  const [mapCenter, setMapCenter] = useState(null);
 
   const searchLocations = async (e) => {
     e.preventDefault();
@@ -95,6 +123,7 @@ export default function FindBook() {
         if (!address) address = 'Address not available';
 
         const location = {
+          id: element.id || `${element.type}-${element.lat}-${element.lon}`,
           name,
           address,
           lat: element.lat || element.center?.lat,
@@ -118,6 +147,7 @@ export default function FindBook() {
         bookstores: bookstores.slice(0, 5),
         zipcode,
       });
+      setMapCenter([parseFloat(lat), parseFloat(lon)]);
     } catch (err) {
       console.error('Search error:', err);
       setError('Failed to search locations. Please try again.');
@@ -164,11 +194,78 @@ export default function FindBook() {
         {error && <p className="error-message">{error}</p>}
       </form>
 
-      {results && (
+      {results && mapCenter && (
         <div className="results-container">
           <div className="results-header">
             <FiMapPin size={18} />
             <span>Results for {results.zipcode}</span>
+          </div>
+
+          {/* Map View */}
+          <div className="map-container">
+            <MapContainer 
+              center={mapCenter} 
+              zoom={13} 
+              style={{ height: '400px', width: '100%' }}
+              scrollWheelZoom={false}
+            >
+              <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              
+              {/* Library markers */}
+              {results.libraries.map((lib) => (
+                <Marker 
+                  key={lib.id}
+                  position={[parseFloat(lib.lat), parseFloat(lib.lon)]}
+                  icon={libraryIcon}
+                  eventHandlers={{
+                    mouseover: () => setHoveredLocation(lib.id),
+                    mouseout: () => setHoveredLocation(null),
+                  }}
+                >
+                  <Popup>
+                    <div className="map-popup">
+                      <strong>{lib.name}</strong>
+                      <p>{lib.address}</p>
+                      {lib.phone && <p>📞 {lib.phone}</p>}
+                    </div>
+                  </Popup>
+                </Marker>
+              ))}
+
+              {/* Bookstore markers */}
+              {results.bookstores.map((store) => (
+                <Marker 
+                  key={store.id}
+                  position={[parseFloat(store.lat), parseFloat(store.lon)]}
+                  icon={bookstoreIcon}
+                  eventHandlers={{
+                    mouseover: () => setHoveredLocation(store.id),
+                    mouseout: () => setHoveredLocation(null),
+                  }}
+                >
+                  <Popup>
+                    <div className="map-popup">
+                      <strong>{store.name}</strong>
+                      <p>{store.address}</p>
+                      {store.phone && <p>📞 {store.phone}</p>}
+                    </div>
+                  </Popup>
+                </Marker>
+              ))}
+            </MapContainer>
+            <div className="map-legend">
+              <div className="legend-item">
+                <img src="https://img.icons8.com/fluency/24/visited.png" alt="Library" />
+                <span>Library</span>
+              </div>
+              <div className="legend-item">
+                <img src="https://img.icons8.com/fluency/24/shop.png" alt="Bookstore" />
+                <span>Bookstore</span>
+              </div>
+            </div>
           </div>
 
           <div className="results-grid">
@@ -182,8 +279,13 @@ export default function FindBook() {
                 <p className="no-results">No libraries found nearby</p>
               ) : (
                 <div className="location-list">
-                  {results.libraries.map((lib, idx) => (
-                    <div key={idx} className="location-card">
+                  {results.libraries.map((lib) => (
+                    <div 
+                      key={lib.id} 
+                      className={`location-card ${hoveredLocation === lib.id ? 'highlighted' : ''}`}
+                      onMouseEnter={() => setHoveredLocation(lib.id)}
+                      onMouseLeave={() => setHoveredLocation(null)}
+                    >
                       <h4>{lib.name}</h4>
                       <p className="location-address">{lib.address}</p>
                       {lib.phone && (
@@ -227,8 +329,13 @@ export default function FindBook() {
                 <p className="no-results">No bookstores found nearby</p>
               ) : (
                 <div className="location-list">
-                  {results.bookstores.map((store, idx) => (
-                    <div key={idx} className="location-card">
+                  {results.bookstores.map((store) => (
+                    <div 
+                      key={store.id} 
+                      className={`location-card ${hoveredLocation === store.id ? 'highlighted' : ''}`}
+                      onMouseEnter={() => setHoveredLocation(store.id)}
+                      onMouseLeave={() => setHoveredLocation(null)}
+                    >
                       <h4>{store.name}</h4>
                       <p className="location-address">{store.address}</p>
                       {store.phone && (
